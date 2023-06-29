@@ -1,5 +1,15 @@
 {
   "dependencies": {
+    "com.me.ecs": "https://github.com/chromealex/ecs-submodule.git",
+    "com.me.ecs.addons.sceneviewinitializer": "https://github.com/chromealex/me.ecs-sceneviewinitializer.git",
+    "com.me.ecs.aspects": "https://github.com/chromealex/me.ecs-aspects.git",
+    "com.me.ecs.essentials.dataconfigs": "https://github.com/chromealex/me.ecs-dataconfigs.git",
+    "com.me.ecs.essentials.globalevents": "https://github.com/chromealex/me.ecs-globalevents.git",
+    "com.me.ecs.essentials.input": "https://github.com/chromealex/me.ecs-input.git",
+    "com.me.ecs.fpmath": "https://github.com/chromealex/me.ecs-fpmath.git",
+    "com.me.ecs.markers": "https://github.com/chromealex/me.ecs-markers.git",
+    "com.me.ecs.transform": "https://github.com/chromealex/me.ecs-transform.git",
+    "com.unity.cinemachine": "2.8.9",
     "com.unity.collab-proxy": "1.17.7",
     "com.unity.feature.development": "1.0.1",
     "com.unity.ide.rider": "3.0.16",
@@ -40,7 +50,6 @@
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0",
-    "com.me.ecs": "https://github.com/chromealex/ecs-submodule.git"
+    "com.unity.modules.xr": "1.0.0"
   }
 }
