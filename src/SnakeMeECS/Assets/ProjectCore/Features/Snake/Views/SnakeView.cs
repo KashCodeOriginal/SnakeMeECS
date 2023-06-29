@@ -3,7 +3,7 @@ using ME.ECS.Views.Providers;
 
 namespace ProjectCore.Features.Snake.Views 
 {
-    public class SnakeView : MonoBehaviourView 
+    public class SnakeView : MonoBehaviourView
     {
         public override bool applyStateJob => true;
 

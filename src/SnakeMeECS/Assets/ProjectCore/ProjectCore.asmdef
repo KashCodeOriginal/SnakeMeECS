@@ -5,7 +5,8 @@
         "ME.ECS",
         "ME.Pools",
         "ME.ECS.Serializer",
-        "ME.ECS.IL2CPP"
+        "ME.ECS.IL2CPP",
+        "ME.ECS.Addons.DataConfigs"
         
     ],
     "includePlatforms": [],

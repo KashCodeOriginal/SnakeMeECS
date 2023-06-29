@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: SnakeFeature
   m_EditorClassIdentifier: 
   editorComment: 
+  _snakeConfig: {fileID: 11400000, guid: 33bfa5a019a98f94a852bc3d44fcb92d, type: 2}
+  _snakeView: {fileID: 3960141118872539119, guid: fb853b157ef265b4ca4e99c3bc7db549, type: 3}

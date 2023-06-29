@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sharedGroupId: 0
   structComponents:
-  - rid: 1028594894577336368
+  - rid: 1028594901902426112
   removeStructComponents: []
   templates: []
   references:
     version: 2
     RefIds:
-    - rid: 1028594894577336368
+    - rid: 1028594901902426112
       type: {class: SnakeInitializer, ns: ProjectCore.Features.Snake.Components, asm: ProjectCore}
       data:
         StartPosition: {x: 0, y: 0, z: 0}

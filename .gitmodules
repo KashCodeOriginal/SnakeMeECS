@@ -1,0 +1,24 @@
+[submodule "src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.essentials.destroy"]
+	path = src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.essentials.destroy
+	url = https://github.com/chromealex/me.ecs-destroy
+[submodule "src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.essentials.input"]
+	path = src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.essentials.input
+	url = https://github.com/chromealex/me.ecs-input
+[submodule "src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.markers"]
+	path = src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.markers
+	url = https://github.com/chromealex/me.ecs-markers
+[submodule "src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.essentials.dataconfigs"]
+	path = src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.essentials.dataconfigs
+	url = https://github.com/chromealex/me.ecs-dataconfigs
+[submodule "src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.essentials.globalevents"]
+	path = src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.essentials.globalevents
+	url = https://github.com/chromealex/me.ecs-globalevents
+[submodule "src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.transform"]
+	path = src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.transform
+	url = https://github.com/chromealex/me.ecs-transform
+[submodule "src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.fpmath"]
+	path = src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.fpmath
+	url = https://github.com/chromealex/me.ecs-fpmath
+[submodule "src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.addons.sceneviewinitializer"]
+	path = src/SnakeMeECS/Assets/ME.ECS.Addons/com.me.ecs.addons.sceneviewinitializer
+	url = https://github.com/chromealex/me.ecs-sceneviewinitializer
