@@ -2,6 +2,7 @@
 using ME.ECS.DataConfigs;
 using ME.ECS.Views.Providers;
 using ProjectCore.Features.Snake.Components;
+using ProjectCore.Features.Snake.Systems;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -19,12 +20,21 @@ namespace ProjectCore.Features
     #endif
     public sealed class SnakeFeature : Feature
     {
+        public ViewId ViewId { get; private set; }
+        
         [SerializeField] private DataConfig _snakeConfig;
         [SerializeField] private MonoBehaviourViewBase _snakeView;
         
         protected override void OnConstruct()
         {
+            AddSystem<SnakeSpawnSystem>();
+        }
+
+        protected override void OnConstructLate()
+        {
             var snakeEntity = world.AddEntity();
+
+            ViewId = world.RegisterViewSource(_snakeView);
 
             snakeEntity.Set(new SnakeInitializer()
             {

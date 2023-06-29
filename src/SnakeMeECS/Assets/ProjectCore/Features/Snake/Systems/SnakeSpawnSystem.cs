@@ -1,4 +1,5 @@
 ﻿using ME.ECS;
+using UnityEngine;
 
 namespace ProjectCore.Features.Snake.Systems {
 
@@ -18,10 +19,9 @@ namespace ProjectCore.Features.Snake.Systems {
         
         public World world { get; set; }
         
-        void ISystemBase.OnConstruct() {
-            
-            this.GetFeature(out this.feature);
-            
+        void ISystemBase.OnConstruct() 
+        {
+            this.GetFeature(out feature);
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -31,13 +31,22 @@ namespace ProjectCore.Features.Snake.Systems {
         int ISystemFilter.jobsBatchCount => 64;
         #endif
         Filter ISystemFilter.filter { get; set; }
-        Filter ISystemFilter.CreateFilter() {
-            
-            return Filter.Create("Filter-SnakeSpawnSystem").Push();
+        Filter ISystemFilter.CreateFilter() 
+        {
+            return Filter.Create("Filter-SnakeSpawnSystem")
+                .With<SnakeInitializer>()
+                .Push();
             
         }
-    
-        void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime) {}
+
+        void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
+        {
+            var data = entity.Get<SnakeInitializer>();
+            
+            world.InstantiateView(feature.ViewId, entity);
+
+            entity.Remove<SnakeInitializer>();
+        }
     
     }
     

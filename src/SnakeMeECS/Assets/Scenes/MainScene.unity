@@ -363,6 +363,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: worldDebugSettings.viewsSettings.unityGameObjectProviderShowOnScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: featuresListCategories.items.Array.data[0].features.features.Array.size
       value: 1
       objectReference: {fileID: 0}
