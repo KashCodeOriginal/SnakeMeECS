@@ -1,3 +1,4 @@
+    using ProjectCore.Features;
     using UnityEngine;
 
 #region Namespaces
@@ -37,7 +38,8 @@ namespace ProjectCore.Generator {
 
         public void Update() {
 
-            if (this.world == null) {
+            if (this.world == null)
+            {
 
                 // Initialize world
                 WorldUtilities.CreateWorld<TState>(ref this.world, this.tickTime);
@@ -55,7 +57,6 @@ namespace ProjectCore.Generator {
                     ComponentsInitializer.DoInit();
                     this.world.SetEntitiesCapacity(this.entitiesCapacity);
                     this.Initialize(this.world);
-                    
                 }
                 
             }
