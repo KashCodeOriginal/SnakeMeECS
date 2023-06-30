@@ -13,7 +13,8 @@ namespace ProjectCore.Features.Snake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class SnakeMoveSystem : ISystemFilter {
+    public sealed class SnakeMoveSystem : ISystemFilter
+    {
         
         private SnakeFeature _snake;
         private InputFeature _input;
@@ -30,11 +31,12 @@ namespace ProjectCore.Features.Snake.Systems
         void ISystemBase.OnDeconstruct() {}
         
         #if !CSHARP_8_OR_NEWER
-        bool ISystemFilter.jobs => false;
+        bool ISystemFilter.jobs => true;
         int ISystemFilter.jobsBatchCount => 64;
         #endif
         Filter ISystemFilter.filter { get; set; }
-        Filter ISystemFilter.CreateFilter() {
+        Filter ISystemFilter.CreateFilter() 
+        {
             
             return Filter.Create("Filter-SnakeMoveSystem").
                 With<SnakeMovementSpeed>().
@@ -46,7 +48,7 @@ namespace ProjectCore.Features.Snake.Systems
         {
             var currentEntityPos = entity.GetPosition();
 
-            var entityMoveSpeed = entity.Get<SnakeMovementSpeed>();
+            var entityMoveSpeed = entity.Get<SnakeMovementSpeed>().Value;
 
             if (_input.MoveDirection != Vector2.zero)
             {
@@ -54,12 +56,11 @@ namespace ProjectCore.Features.Snake.Systems
                 
                 var moveDirection = new Vector3(_input.MoveDirection.x, 0, _input.MoveDirection.y).normalized;
 
-                var newPos = currentPos + moveDirection;
-
-                entity.SetPosition(Vector3.MoveTowards(currentPos, newPos, entityMoveSpeed.Value * deltaTime));
+                currentPos += moveDirection * entityMoveSpeed * deltaTime;
+                
+                entity.SetPosition(currentPos);
             }
         }
-    
     }
     
 }

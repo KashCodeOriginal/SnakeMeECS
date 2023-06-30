@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d737e1e559e6ffc49934b0934b2c2c9d, type: 3}
-  m_Name: SnakeFeature
+  m_Script: {fileID: 11500000, guid: 1987035c27f9f0b44a8b3ac430b75238, type: 3}
+  m_Name: MapFeature
   m_EditorClassIdentifier: 
   editorComment: 
-  _snakeConfig: {fileID: 11400000, guid: 33bfa5a019a98f94a852bc3d44fcb92d, type: 2}
-  _snakeView: {fileID: 1273506759060014207, guid: fb853b157ef265b4ca4e99c3bc7db549, type: 3}
+  _mapConfig: {fileID: 11400000, guid: e121a96611b5e204f82286e847a66804, type: 2}
+  _cellView: {fileID: 4778209411576359546, guid: c07271faca433ba48a7b785221a49981, type: 3}

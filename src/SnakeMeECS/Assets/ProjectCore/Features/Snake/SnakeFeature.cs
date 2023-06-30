@@ -29,22 +29,27 @@ namespace ProjectCore.Features
         {
             AddSystem<SnakeSpawnSystem>();
             AddSystem<SnakeMoveSystem>();
+            
+            ViewId = world.RegisterViewSource(_snakeView);
         }
 
         protected override void OnConstructLate()
         {
             var snakeEntity = world.AddEntity();
 
-            ViewId = world.RegisterViewSource(_snakeView);
+            var startPosition = _snakeConfig.Get<SnakeInitializer>().StartPosition;
+            var snakeMoveSpeed = _snakeConfig.Get<SnakeMovementSpeed>().Value;
 
             snakeEntity.Set(new SnakeInitializer()
             {
-                StartPosition = _snakeConfig.Get<SnakeInitializer>().StartPosition
+                StartPosition = startPosition
             });
+            
+            snakeEntity.SetLocalPosition(startPosition);
 
             snakeEntity.Set(new SnakeMovementSpeed()
             {
-                Value = 10f
+                Value = snakeMoveSpeed
             });
         }
 
