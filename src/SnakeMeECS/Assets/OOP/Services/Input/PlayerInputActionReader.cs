@@ -2,7 +2,6 @@
 using OOP.Services.Locator;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Vector2 = System.Numerics.Vector2;
 
 namespace OOP.Services.Input
 {

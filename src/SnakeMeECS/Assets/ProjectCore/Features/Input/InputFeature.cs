@@ -26,13 +26,22 @@ namespace ProjectCore.Features
         protected override void OnConstruct()
         {
             _playerInputActionReader = ServiceLocator.Container.Single<PlayerInputActionReader>();
+
+            _playerInputActionReader.OnMovementInput += OnPlayerInput;
         }
 
         protected override void OnDeconstruct() 
         {
-            
+            _playerInputActionReader.OnMovementInput -= OnPlayerInput;
         }
 
+        private void OnPlayerInput(Vector2 input)
+        {
+            world.AddMarker(new PlayerWasdInputMarker()
+            {
+                Value = input
+            });
+        }
     }
 
 }
