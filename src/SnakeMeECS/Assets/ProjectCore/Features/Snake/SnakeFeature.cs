@@ -28,6 +28,7 @@ namespace ProjectCore.Features
         protected override void OnConstruct()
         {
             AddSystem<SnakeSpawnSystem>();
+            AddSystem<SnakeMoveSystem>();
         }
 
         protected override void OnConstructLate()
@@ -39,6 +40,11 @@ namespace ProjectCore.Features
             snakeEntity.Set(new SnakeInitializer()
             {
                 StartPosition = _snakeConfig.Get<SnakeInitializer>().StartPosition
+            });
+
+            snakeEntity.Set(new SnakeMovementSpeed()
+            {
+                Value = 10f
             });
         }
 

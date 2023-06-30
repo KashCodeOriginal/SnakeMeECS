@@ -24,7 +24,7 @@ namespace ProjectCore.Features.Snake.Views
         
         public override void ApplyState(float deltaTime, bool immediately) 
         {
-            
+            transform.position = entity.GetPosition();
         }
         
     }

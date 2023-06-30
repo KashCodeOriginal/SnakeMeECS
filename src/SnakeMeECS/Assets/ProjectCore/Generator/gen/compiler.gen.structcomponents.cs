@@ -10,7 +10,6 @@ namespace ME.ECS {
 
 
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeInitializer>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeMovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeMovementSpeed>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakePart>(true, true, true, false, false, false, false, false, false);
 
@@ -24,7 +23,6 @@ namespace ME.ECS {
 
 
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeInitializer>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeMovementDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeMovementSpeed>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakePart>(true, true, true, false, false, false, false, false, false);
 
@@ -33,7 +31,6 @@ namespace ME.ECS {
 
 
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakeInitializer>(ref state.allocator, false);
-            state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakeMovementDirection>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakeMovementSpeed>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakePart>(ref state.allocator, true);
 
@@ -47,7 +44,6 @@ namespace ME.ECS {
 
 
             entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakeInitializer>(false);
-            entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakeMovementDirection>(false);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakeMovementSpeed>(false);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakePart>(true);
 

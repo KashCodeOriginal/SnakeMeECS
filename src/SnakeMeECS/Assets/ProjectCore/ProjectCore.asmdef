@@ -8,6 +8,8 @@
         "ME.ECS.IL2CPP",
         "ME.ECS.Addons.DataConfigs",
         "ME.ECS.Markers",
+        "ME.ECS.Transform",
+        "Unity.Mathematics",
         "OOP"
     ],
     "includePlatforms": [],

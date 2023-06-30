@@ -21,6 +21,8 @@ namespace ProjectCore.Features
     #endif
     public sealed class InputFeature : Feature
     {
+        public Vector2 MoveDirection { get; private set; }
+        
         private PlayerInputActionReader _playerInputActionReader;
         
         protected override void OnConstruct()
@@ -37,10 +39,7 @@ namespace ProjectCore.Features
 
         private void OnPlayerInput(Vector2 input)
         {
-            world.AddMarker(new PlayerWasdInputMarker()
-            {
-                Value = input
-            });
+            MoveDirection = input;
         }
     }
 

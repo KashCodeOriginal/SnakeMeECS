@@ -4,6 +4,6 @@ namespace ProjectCore.Features.Snake.Components
 {
     public struct SnakeMovementSpeed : IComponent
     {
-        public float Speed;
+        public float Value;
     }
 }
