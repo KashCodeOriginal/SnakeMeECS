@@ -41,8 +41,6 @@ namespace ProjectCore.Features.Snake.Systems {
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            var data = entity.Get<SnakeInitializer>();
-            
             world.InstantiateView(feature.ViewId, entity);
 
             entity.Remove<SnakeInitializer>();

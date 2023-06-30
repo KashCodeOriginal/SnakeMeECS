@@ -1,13 +1,8 @@
 {
-    "name": "ProjectCore",
+    "name": "OOP",
     "rootNamespace": "",
     "references": [
-        "ME.ECS",
-        "ME.Pools",
-        "ME.ECS.Serializer",
-        "ME.ECS.IL2CPP",
-        "ME.ECS.Addons.DataConfigs",
-        "OOP"
+        "GUID:75469ad4d38634e559750d17036d5f7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
