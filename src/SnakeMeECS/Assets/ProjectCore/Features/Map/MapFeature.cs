@@ -3,7 +3,8 @@ using ME.ECS.DataConfigs;
 using ME.ECS.Views.Providers;
 using UnityEngine;
 
-namespace ProjectCore.Features {
+namespace ProjectCore.Features 
+{
 
     using Components; using Modules; using Systems; using Features; using Markers;
     using Map.Components; using Map.Modules; using Map.Systems; using Map.Markers;
@@ -21,6 +22,8 @@ namespace ProjectCore.Features {
     public sealed class MapFeature : Feature 
     {
         public ViewId ViewId { get; private set; }
+
+        public CellInMatrix[,] MapMatrix;
         
         [SerializeField] private DataConfig _mapConfig;
         [SerializeField] private MonoBehaviourViewBase _cellView;
@@ -38,7 +41,10 @@ namespace ProjectCore.Features {
         {
             var mapProps = _mapConfig.Get<MapProperties>();
             
-            _centerPosition = new Vector3(-mapProps.HorizontalCellAmount / 2, mapProps.MapHeight, -mapProps.VerticalCellAmount / 2);
+            _centerPosition = new Vector3(-mapProps.HorizontalCellAmount / 2, mapProps.MapHeight,
+                -mapProps.VerticalCellAmount / 2);
+
+            MapMatrix = new CellInMatrix[mapProps.HorizontalCellAmount, mapProps.VerticalCellAmount];
 
             _centerPosition += mapProps.CenterPosition;
             
@@ -52,12 +58,17 @@ namespace ProjectCore.Features {
 
                     var cellEntity = world.AddEntity();
 
-                    cellEntity.Set(new CellInitializer()
+                    cellEntity.Set(new CellInitializer());
+
+                    cellEntity.Set(new CellInMatrix()
                     {
-                        Position = targetSpawnPosition
+                        Position = targetSpawnPosition,
+                        IsSnakeInCell = false
                     });
-                    
+
                     cellEntity.SetLocalPosition(targetSpawnPosition);
+
+                    MapMatrix[x, y] = cellEntity.Get<CellInMatrix>();
                 }
             }
         }

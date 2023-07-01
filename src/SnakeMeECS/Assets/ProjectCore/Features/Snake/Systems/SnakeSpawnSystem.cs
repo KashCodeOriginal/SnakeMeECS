@@ -1,4 +1,6 @@
 ﻿using ME.ECS;
+using ProjectCore.Features.Map.Components;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ProjectCore.Features.Snake.Systems {
@@ -15,13 +17,15 @@ namespace ProjectCore.Features.Snake.Systems {
     #endif
     public sealed class SnakeSpawnSystem : ISystemFilter {
         
-        private SnakeFeature feature;
+        private SnakeFeature _snakeFeature;
+        private MapFeature _mapFeature;
         
         public World world { get; set; }
         
         void ISystemBase.OnConstruct() 
         {
-            this.GetFeature(out feature);
+            this.GetFeature(out _snakeFeature);
+            _mapFeature = world.GetFeature<MapFeature>();
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -36,12 +40,26 @@ namespace ProjectCore.Features.Snake.Systems {
             return Filter.Create("Filter-SnakeSpawnSystem")
                 .With<SnakeInitializer>()
                 .Push();
-            
         }
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            world.InstantiateView(feature.ViewId, entity);
+            var matrixPosition = _snakeFeature.SnakeConfig.Get<SnakeInitializer>().SpawnSnakeMatrixPosition;
+
+            var snakePositionFromMatrix = 
+                _mapFeature.MapMatrix[matrixPosition.x, matrixPosition.y].Position;
+
+            var targetSnakePosition = new Vector3(snakePositionFromMatrix.x, snakePositionFromMatrix.y + 1,
+                snakePositionFromMatrix.z);
+
+            _mapFeature.MapMatrix[matrixPosition.x, matrixPosition.y].IsSnakeInCell = true;
+
+            entity.SetPosition(targetSnakePosition);
+
+            entity.Get<SnakePart>().PositionInMatrix = new int3(targetSnakePosition);
+            entity.Get<SnakePart>().IsHead = true;
+            
+            world.InstantiateView(_snakeFeature.ViewId, entity);
 
             entity.Remove<SnakeInitializer>();
         }

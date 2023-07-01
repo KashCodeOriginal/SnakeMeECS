@@ -12,7 +12,8 @@ namespace ProjectCore.Features.Map.Systems {
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class CellSpawnSystem : ISystemFilter {
+    public sealed class CellSpawnSystem : ISystemFilter 
+    {
         
         private MapFeature feature;
         

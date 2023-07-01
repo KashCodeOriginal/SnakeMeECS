@@ -24,8 +24,10 @@ MonoBehaviour:
     - rid: 1028594901902426112
       type: {class: SnakeInitializer, ns: ProjectCore.Features.Snake.Components, asm: ProjectCore}
       data:
-        StartPosition: {x: 0, y: 1, z: 0}
+        SpawnSnakeMatrixPosition:
+          x: 0
+          y: 0
     - rid: 1028594916678697920
       type: {class: SnakeMovementSpeed, ns: ProjectCore.Features.Snake.Components, asm: ProjectCore}
       data:
-        Value: 10
+        Value: 5

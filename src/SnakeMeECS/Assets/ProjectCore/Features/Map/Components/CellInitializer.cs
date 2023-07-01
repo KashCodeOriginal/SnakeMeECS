@@ -1,10 +1,7 @@
 ﻿using ME.ECS;
-using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ProjectCore.Features.Map.Components 
 {
-    public struct CellInitializer : IComponent
-    {
-        public Vector3 Position;
-    }
+    public struct CellInitializer : IComponent { }
 }

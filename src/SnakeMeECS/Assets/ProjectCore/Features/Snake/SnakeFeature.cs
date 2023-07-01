@@ -1,6 +1,8 @@
 ﻿using ME.ECS;
 using ME.ECS.DataConfigs;
 using ME.ECS.Views.Providers;
+using ProjectCore.Components;
+using ProjectCore.Features.Map.Components;
 using ProjectCore.Features.Snake.Components;
 using ProjectCore.Features.Snake.Systems;
 using UnityEngine;
@@ -22,14 +24,14 @@ namespace ProjectCore.Features
     {
         public ViewId ViewId { get; private set; }
         
-        [SerializeField] private DataConfig _snakeConfig;
+        [field: SerializeField] public DataConfig SnakeConfig { get; private set; }
         [SerializeField] private MonoBehaviourViewBase _snakeView;
-        
+
         protected override void OnConstruct()
         {
             AddSystem<SnakeSpawnSystem>();
             AddSystem<SnakeMoveSystem>();
-            
+
             ViewId = world.RegisterViewSource(_snakeView);
         }
 
@@ -37,15 +39,13 @@ namespace ProjectCore.Features
         {
             var snakeEntity = world.AddEntity();
 
-            var startPosition = _snakeConfig.Get<SnakeInitializer>().StartPosition;
-            var snakeMoveSpeed = _snakeConfig.Get<SnakeMovementSpeed>().Value;
+            var snakeMoveSpeed = SnakeConfig.Get<SnakeMovementSpeed>().Value;
 
-            snakeEntity.Set(new SnakeInitializer()
-            {
-                StartPosition = startPosition
-            });
-            
-            snakeEntity.SetLocalPosition(startPosition);
+            snakeEntity.Set<SnakeInitializer>();
+
+            snakeEntity.Set<SnakePart>();
+
+            snakeEntity.Set<Timer>();
 
             snakeEntity.Set(new SnakeMovementSpeed()
             {

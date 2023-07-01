@@ -5,8 +5,8 @@ namespace ProjectCore.Features.Map.Components
 {
     public struct MapProperties : IComponent
     {
-        public float HorizontalCellAmount;
-        public float VerticalCellAmount;
+        public int HorizontalCellAmount;
+        public int VerticalCellAmount;
 
         public float DistanceBetweenCells;
         

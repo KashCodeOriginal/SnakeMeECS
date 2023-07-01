@@ -15,17 +15,18 @@ namespace ProjectCore.Features.Snake.Systems
     #endif
     public sealed class SnakeMoveSystem : ISystemFilter
     {
-        
-        private SnakeFeature _snake;
-        private InputFeature _input;
+        private SnakeFeature _snakeFeature;
+        private InputFeature _inputFeature;
+        private MapFeature _mapFeature;
         
         public World world { get; set; }
         
         void ISystemBase.OnConstruct() 
         {
-            this.GetFeature(out _snake);
+            this.GetFeature(out _snakeFeature);
             
-            _input = world.GetFeature<InputFeature>();
+            _inputFeature = world.GetFeature<InputFeature>();
+            _mapFeature = world.GetFeature<MapFeature>();
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -37,29 +38,35 @@ namespace ProjectCore.Features.Snake.Systems
         Filter ISystemFilter.filter { get; set; }
         Filter ISystemFilter.CreateFilter() 
         {
-            
             return Filter.Create("Filter-SnakeMoveSystem").
                 With<SnakeMovementSpeed>().
+                With<Timer>().
                 Without<SnakeInitializer>().
                 Push();
         }
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            var currentEntityPos = entity.GetPosition();
+            ref var timer = ref entity.Get<Timer>().Value;
+            var snakeSpeed = _snakeFeature.SnakeConfig.Read<SnakeMovementSpeed>().Value;
 
-            var entityMoveSpeed = entity.Get<SnakeMovementSpeed>().Value;
+            snakeSpeed = 1 / snakeSpeed;
 
-            if (_input.MoveDirection != Vector2.zero)
+            timer += deltaTime;
+
+            if (timer >= snakeSpeed)
             {
-                var currentPos = new Vector3(currentEntityPos.x, currentEntityPos.y, currentEntityPos.z);
-                
-                var moveDirection = new Vector3(_input.MoveDirection.x, 0, _input.MoveDirection.y).normalized;
+                var currentSnakePos = entity.Get<SnakePart>().PositionInMatrix;
+                currentSnakePos.x += 1;
+            
+                entity.SetPosition(currentSnakePos);
 
-                currentPos += moveDirection * entityMoveSpeed * deltaTime;
-                
-                entity.SetPosition(currentPos);
+                entity.Get<SnakePart>().PositionInMatrix = currentSnakePos;
+
+                timer = 0;
             }
+
+            
         }
     }
     

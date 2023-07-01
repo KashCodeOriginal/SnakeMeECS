@@ -462,8 +462,8 @@ MonoBehaviour:
     useCacheTimeout: 0
     cacheTimeout: 0
   interpolationParameters:
-    enabled: 0
-    movementSpeed: 0
+    enabled: 1
+    movementSpeed: 10
     rotationSpeed: 0
   parentParameters:
     enabled: 0
