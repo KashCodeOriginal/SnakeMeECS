@@ -30,4 +30,4 @@ MonoBehaviour:
     - rid: 1028594916678697920
       type: {class: SnakeMovementSpeed, ns: ProjectCore.Features.Snake.Components, asm: ProjectCore}
       data:
-        Value: 5
+        Value: 3

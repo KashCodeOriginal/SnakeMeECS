@@ -31,6 +31,7 @@ namespace ProjectCore.Features
         {
             AddSystem<SnakeSpawnSystem>();
             AddSystem<SnakeMoveSystem>();
+            AddSystem<SnakeDirectionChangeSystem>();
 
             ViewId = world.RegisterViewSource(_snakeView);
         }
@@ -51,6 +52,12 @@ namespace ProjectCore.Features
             {
                 Value = snakeMoveSpeed
             });
+
+            snakeEntity.Set(new SnakeMoveDirection()
+            {
+                currentDirection = Direction.Up
+            });
+            
         }
 
         protected override void OnDeconstruct() 

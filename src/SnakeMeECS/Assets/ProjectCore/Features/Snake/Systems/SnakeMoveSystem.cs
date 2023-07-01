@@ -1,4 +1,5 @@
 ﻿using ME.ECS;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ProjectCore.Features.Snake.Systems 
@@ -16,8 +17,9 @@ namespace ProjectCore.Features.Snake.Systems
     public sealed class SnakeMoveSystem : ISystemFilter
     {
         private SnakeFeature _snakeFeature;
-        private InputFeature _inputFeature;
         private MapFeature _mapFeature;
+
+        private int3 _moveOffset;
         
         public World world { get; set; }
         
@@ -25,7 +27,6 @@ namespace ProjectCore.Features.Snake.Systems
         {
             this.GetFeature(out _snakeFeature);
             
-            _inputFeature = world.GetFeature<InputFeature>();
             _mapFeature = world.GetFeature<MapFeature>();
         }
         
@@ -48,25 +49,68 @@ namespace ProjectCore.Features.Snake.Systems
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
             ref var timer = ref entity.Get<Timer>().Value;
-            var snakeSpeed = _snakeFeature.SnakeConfig.Read<SnakeMovementSpeed>().Value;
-
-            snakeSpeed = 1 / snakeSpeed;
+            
+            var snakeSpeed = 1 / _snakeFeature.SnakeConfig.Read<SnakeMovementSpeed>().Value;
+            var snakeDirection = entity.Read<SnakeMoveDirection>().currentDirection;
 
             timer += deltaTime;
 
-            if (timer >= snakeSpeed)
+            if (!CanMakeStep(timer, snakeSpeed))
             {
-                var currentSnakePos = entity.Get<SnakePart>().PositionInMatrix;
-                currentSnakePos.x += 1;
+                return;
+            }
             
-                entity.SetPosition(currentSnakePos);
+            ref var currentSnakePos = ref entity.Get<SnakePart>().PositionInMatrix;
 
-                entity.Get<SnakePart>().PositionInMatrix = currentSnakePos;
+            SetMoveOffset(snakeDirection);
 
-                timer = 0;
+            currentSnakePos += _moveOffset;
+
+            entity.SetPosition(currentSnakePos);
+
+            timer = 0;
+        }
+
+        private static bool CanMakeStep(float timer, float snakeSpeed)
+        {
+            if (timer < snakeSpeed)
+            {
+                return false;
             }
 
-            
+            return true;
+        }
+
+        private void SetMoveOffset(Direction snakeDirection)
+        {
+            if (snakeDirection == Direction.Up)
+            {
+                if (_moveOffset.z != -1)
+                {
+                    _moveOffset = new int3(0, 0, 1);
+                }
+            }
+            else if (snakeDirection == Direction.Down)
+            {
+                if (_moveOffset.z != 1)
+                {
+                    _moveOffset = new int3(0, 0, -1);
+                }
+            }
+            else if (snakeDirection == Direction.Right)
+            {
+                if (_moveOffset.x != -1)
+                {
+                    _moveOffset = new int3(1, 0, 0);
+                }
+            }
+            else if (snakeDirection == Direction.Left)
+            {
+                if (_moveOffset.x != 1)
+                {
+                    _moveOffset = new int3(-1, 0, 0);
+                }
+            }
         }
     }
     
