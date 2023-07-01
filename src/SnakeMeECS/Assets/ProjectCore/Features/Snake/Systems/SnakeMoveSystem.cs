@@ -1,4 +1,5 @@
 ﻿using ME.ECS;
+using ProjectCore.Features.Food.Components;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -65,6 +66,11 @@ namespace ProjectCore.Features.Snake.Systems
             SetMoveOffset(snakeDirection);
 
             currentSnakePos += _moveOffset;
+
+            if (_mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z].Food != null)
+            {
+                _mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z].Food.Value.Set<FoodChangePositionTag>();
+            }
 
             entity.SetPosition(currentSnakePos);
 

@@ -25,10 +25,10 @@ namespace ProjectCore.Features
 
         public CellInMatrix[,] MapMatrix;
         
-        [SerializeField] private DataConfig _mapConfig;
+        [field: SerializeField] public DataConfig MapConfig { get; private set; }
         [SerializeField] private MonoBehaviourViewBase _cellView;
 
-        private Vector3 _centerPosition;
+        private Vector3 _cornerPosition;
         
         protected override void OnConstruct()
         {
@@ -39,15 +39,13 @@ namespace ProjectCore.Features
 
         protected override void OnConstructLate()
         {
-            var mapProps = _mapConfig.Get<MapProperties>();
+            var mapProps = MapConfig.Get<MapProperties>();
             
-            _centerPosition = new Vector3(-mapProps.HorizontalCellAmount / 2, mapProps.MapHeight,
-                -mapProps.VerticalCellAmount / 2);
+            _cornerPosition = new Vector3(0, mapProps.MapHeight,
+                0);
 
             MapMatrix = new CellInMatrix[mapProps.HorizontalCellAmount, mapProps.VerticalCellAmount];
 
-            _centerPosition += mapProps.CenterPosition;
-            
             for (int x = 0; x < mapProps.HorizontalCellAmount; x++)
             {
                 for (int y = 0; y < mapProps.VerticalCellAmount; y++)
@@ -63,7 +61,7 @@ namespace ProjectCore.Features
                     cellEntity.Set(new CellInMatrix()
                     {
                         Position = targetSpawnPosition,
-                        IsSnakeInCell = false
+                        SnakePart = null
                     });
 
                     cellEntity.SetLocalPosition(targetSpawnPosition);
@@ -80,7 +78,7 @@ namespace ProjectCore.Features
         
         Vector3 GetSpawnPosition(int row, int column, float distance)
         {
-            return _centerPosition + 
+            return _cornerPosition + 
                    Vector3.forward * column * distance + 
                    Vector3.right * row * distance;
         }

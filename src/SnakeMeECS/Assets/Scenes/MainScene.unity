@@ -178,7 +178,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: tickTime
-      value: 0.033
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: selectedConfiguration
@@ -202,7 +202,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: featuresListCategories.items.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: configurations.Array.data[1].configurationType
@@ -397,6 +397,10 @@ PrefabInstance:
       value: SnakeFeature
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: featuresListCategories.items.Array.data[3].folderCaption
+      value: SnakeFeature
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: configurations.Array.data[0].defines.Array.data[0].enabled
       value: 1
       objectReference: {fileID: 0}
@@ -437,6 +441,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: featuresListCategories.items.Array.data[3].features.features.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: featuresListCategories.items.Array.data[0].features.features.Array.data[0].enabled
       value: 1
       objectReference: {fileID: 0}
@@ -468,6 +476,14 @@ PrefabInstance:
       propertyPath: featuresListCategories.items.Array.data[2].features.features.Array.data[0].feature
       value: 
       objectReference: {fileID: 11400000, guid: 2144fd2207ea35a45ba0d0d2b6263281, type: 2}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: featuresListCategories.items.Array.data[3].features.features.Array.data[0].enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: featuresListCategories.items.Array.data[3].features.features.Array.data[0].feature
+      value: 
+      objectReference: {fileID: 11400000, guid: 31d47218727f5894ab944ca63f82df56, type: 2}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: featuresListCategories.items.Array.data[0].features.features.Array.data[0].innerFeatures.features.Array.size
       value: 0

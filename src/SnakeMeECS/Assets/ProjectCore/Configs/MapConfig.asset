@@ -27,4 +27,4 @@ MonoBehaviour:
         VerticalCellAmount: 32
         DistanceBetweenCells: 1
         MapHeight: 0
-        CenterPosition: {x: 0, y: 0, z: 0}
+        CenterPosition: {x: 16, y: 0, z: 16}

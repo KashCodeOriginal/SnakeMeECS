@@ -6,6 +6,7 @@ namespace ProjectCore.Features.Map.Components
     public struct CellInMatrix : IComponent
     {
         public Vector3 Position;
-        public bool IsSnakeInCell;
+        public Entity? SnakePart;
+        public Entity? Food;
     }
 }

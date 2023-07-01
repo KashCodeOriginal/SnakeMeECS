@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1987035c27f9f0b44a8b3ac430b75238, type: 3}
-  m_Name: MapFeature
+  m_Script: {fileID: 11500000, guid: 716db430c80e40848a54497cbaeb9061, type: 3}
+  m_Name: FoodFeature
   m_EditorClassIdentifier: 
   editorComment: 
-  <MapConfig>k__BackingField: {fileID: 11400000, guid: e121a96611b5e204f82286e847a66804, type: 2}
-  _cellView: {fileID: 4778209411576359546, guid: c07271faca433ba48a7b785221a49981, type: 3}
+  _dataConfig: {fileID: 0}
+  _foodView: {fileID: 3154779369698865684, guid: 52b1330e33c17e34483a83263b9a5b7d, type: 3}

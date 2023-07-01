@@ -1,6 +1,10 @@
 ﻿using ME.ECS;
+using ProjectCore.Features.Map.Components;
+using Unity.Mathematics;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
-namespace ProjectCore.Features.Map.Systems {
+namespace ProjectCore.Features.Food.Systems {
 
     #pragma warning disable
     using ProjectCore.Components; using ProjectCore.Modules; using ProjectCore.Systems; using ProjectCore.Markers;
@@ -12,16 +16,15 @@ namespace ProjectCore.Features.Map.Systems {
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class CellSpawnSystem : ISystemFilter 
+    public sealed class FoodSpawnSystem : ISystemFilter 
     {
-        
-        private MapFeature feature;
+        private FoodFeature _foodFeature;
         
         public World world { get; set; }
         
-        void ISystemBase.OnConstruct() {
-            
-            this.GetFeature(out this.feature);
+        void ISystemBase.OnConstruct() 
+        {
+            this.GetFeature(out this._foodFeature);
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -31,18 +34,18 @@ namespace ProjectCore.Features.Map.Systems {
         int ISystemFilter.jobsBatchCount => 64;
         #endif
         Filter ISystemFilter.filter { get; set; }
-        Filter ISystemFilter.CreateFilter() {
-            
-            return Filter.Create("Filter-CellSpawnSystem").
-                With<CellInitializer>().
-                Push();
+        Filter ISystemFilter.CreateFilter() 
+        {
+            return Filter.Create("Filter-FoodSpawnSystem")
+                .With<FoodInitializer>()
+                .Push();
         }
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            world.InstantiateView(feature.ViewId, entity);
-
-            entity.Remove<CellInitializer>();   
+            world.InstantiateView(_foodFeature.ViewId, entity);
+            
+            entity.Remove<FoodInitializer>();
         }
     }
     

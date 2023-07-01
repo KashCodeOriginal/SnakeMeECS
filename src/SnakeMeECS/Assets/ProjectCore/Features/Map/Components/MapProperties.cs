@@ -11,7 +11,5 @@ namespace ProjectCore.Features.Map.Components
         public float DistanceBetweenCells;
         
         public float MapHeight;
-
-        public Vector3 CenterPosition;
     }
 }

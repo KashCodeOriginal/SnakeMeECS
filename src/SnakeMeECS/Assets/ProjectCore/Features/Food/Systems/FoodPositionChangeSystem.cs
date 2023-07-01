@@ -1,9 +1,8 @@
 ﻿using ME.ECS;
 using ProjectCore.Features.Map.Components;
-using Unity.Mathematics;
 using UnityEngine;
 
-namespace ProjectCore.Features.Snake.Systems {
+namespace ProjectCore.Features.Food.Systems {
 
     #pragma warning disable
     using ProjectCore.Components; using ProjectCore.Modules; using ProjectCore.Systems; using ProjectCore.Markers;
@@ -15,16 +14,17 @@ namespace ProjectCore.Features.Snake.Systems {
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class SnakeSpawnSystem : ISystemFilter {
+    public sealed class FoodPositionChangeSystem : ISystemFilter {
         
-        private SnakeFeature _snakeFeature;
+        private FoodFeature _foodFeature;
         private MapFeature _mapFeature;
         
         public World world { get; set; }
         
-        void ISystemBase.OnConstruct() 
-        {
-            this.GetFeature(out _snakeFeature);
+        void ISystemBase.OnConstruct() {
+            
+            this.GetFeature(out this._foodFeature);
+
             _mapFeature = world.GetFeature<MapFeature>();
         }
         
@@ -35,35 +35,35 @@ namespace ProjectCore.Features.Snake.Systems {
         int ISystemFilter.jobsBatchCount => 64;
         #endif
         Filter ISystemFilter.filter { get; set; }
-        Filter ISystemFilter.CreateFilter() 
-        {
-            return Filter.Create("Filter-SnakeSpawnSystem")
-                .With<SnakeInitializer>()
+        Filter ISystemFilter.CreateFilter() {
+            
+            return Filter.Create("Filter-FoodPositionChangeSystem")
+                .With<FoodChangePositionTag>()
                 .Push();
+            
         }
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            var matrixPosition = _snakeFeature.SnakeConfig.Get<SnakeInitializer>().SpawnSnakeMatrixPosition;
-
-            var snakePositionFromMatrix = 
-                _mapFeature.MapMatrix[matrixPosition.x, matrixPosition.y].Position;
-
-            var targetSnakePosition = new Vector3(snakePositionFromMatrix.x, snakePositionFromMatrix.y + 1,
-                snakePositionFromMatrix.z);
-
-            _mapFeature.MapMatrix[matrixPosition.x, matrixPosition.y].SnakePart = entity;
-
-            entity.SetPosition(targetSnakePosition);
-
-            entity.Get<SnakePart>().PositionInMatrix = new int3(targetSnakePosition);
-            entity.Get<SnakePart>().IsHead = true;
+            var mapMatrixConfig = _mapFeature.MapConfig.Get<MapProperties>();
             
-            world.InstantiateView(_snakeFeature.ViewId, entity);
+            int randomXMatrixPosition;
+            int randomZMatrixPosition;
+            
+            do
+            {
+                randomXMatrixPosition = Random.Range(0,mapMatrixConfig.HorizontalCellAmount);
+                randomZMatrixPosition = Random.Range(0,mapMatrixConfig.VerticalCellAmount);
+            }
+            while (_mapFeature.MapMatrix[randomXMatrixPosition, randomZMatrixPosition].SnakePart != null);
 
-            entity.Remove<SnakeInitializer>();
+            var positionInMatrix = _mapFeature.MapMatrix[randomXMatrixPosition, randomZMatrixPosition].Position;
+            
+            entity.SetPosition(positionInMatrix);
+
+            _mapFeature.MapMatrix[randomXMatrixPosition, randomZMatrixPosition].Food = entity;
+
+            entity.Remove<FoodChangePositionTag>();
         }
-    
     }
-    
 }
