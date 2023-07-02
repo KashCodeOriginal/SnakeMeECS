@@ -1,10 +1,12 @@
-﻿using ME.ECS;
+﻿using System.Collections.Generic;
+using ME.ECS;
 using ME.ECS.DataConfigs;
 using ME.ECS.Views.Providers;
 using ProjectCore.Components;
 using ProjectCore.Features.Map.Components;
 using ProjectCore.Features.Snake.Components;
 using ProjectCore.Features.Snake.Systems;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,18 +24,25 @@ namespace ProjectCore.Features
     #endif
     public sealed class SnakeFeature : Feature
     {
-        public ViewId ViewId { get; private set; }
-        
+        public ViewId SnakeHeadViewId { get; private set; }
+        public ViewId SnakePartViewId { get; private set; }
+
+        public List<int3> SnakePositions = new();
+
         [field: SerializeField] public DataConfig SnakeConfig { get; private set; }
-        [SerializeField] private MonoBehaviourViewBase _snakeView;
+        [SerializeField] private MonoBehaviourViewBase _snakeHeadView;
+        [SerializeField] private MonoBehaviourViewBase _snakePartView;
 
         protected override void OnConstruct()
         {
-            AddSystem<SnakeSpawnSystem>();
-            AddSystem<SnakeMoveSystem>();
+            AddSystem<SnakeHeadSpawnSystem>();
+            AddSystem<SnakeHeadMoveSystem>();
             AddSystem<SnakeDirectionChangeSystem>();
+            AddSystem<SnakePartCreationSystem>();
+            AddSystem<SnakePartDestroySystem>();
 
-            ViewId = world.RegisterViewSource(_snakeView);
+            SnakeHeadViewId = world.RegisterViewSource(_snakeHeadView);
+            SnakePartViewId = world.RegisterViewSource(_snakePartView);
         }
 
         protected override void OnConstructLate()
@@ -44,7 +53,7 @@ namespace ProjectCore.Features
 
             snakeEntity.Set<SnakeInitializer>();
 
-            snakeEntity.Set<SnakePart>();
+            snakeEntity.Set<SnakeHead>();
 
             snakeEntity.Set<Timer>();
 
@@ -57,7 +66,11 @@ namespace ProjectCore.Features
             {
                 currentDirection = Direction.Up
             });
-            
+
+            snakeEntity.Set(new SnakeBody()
+            {
+                Length = 2
+            });
         }
 
         protected override void OnDeconstruct() 

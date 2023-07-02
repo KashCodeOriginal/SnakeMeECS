@@ -1,4 +1,5 @@
-﻿using ME.ECS;
+﻿using System.Collections.Generic;
+using ME.ECS;
 using ProjectCore.Features.Food.Components;
 using Unity.Mathematics;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace ProjectCore.Features.Snake.Systems
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class SnakeMoveSystem : ISystemFilter
+    public sealed class SnakeHeadMoveSystem : ISystemFilter
     {
         private SnakeFeature _snakeFeature;
         private MapFeature _mapFeature;
@@ -50,6 +51,8 @@ namespace ProjectCore.Features.Snake.Systems
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
             ref var timer = ref entity.Get<Timer>().Value;
+
+            ref var  snakeBody = ref entity.Get<SnakeBody>();
             
             var snakeSpeed = 1 / _snakeFeature.SnakeConfig.Read<SnakeMovementSpeed>().Value;
             var snakeDirection = entity.Read<SnakeMoveDirection>().currentDirection;
@@ -60,21 +63,49 @@ namespace ProjectCore.Features.Snake.Systems
             {
                 return;
             }
-            
-            ref var currentSnakePos = ref entity.Get<SnakePart>().PositionInMatrix;
 
+            ref var currentSnakePos = ref entity.Get<SnakeHead>().PositionInMatrix;
+            
+            _snakeFeature.SnakePositions.Insert(0, currentSnakePos);
+  
             SetMoveOffset(snakeDirection);
 
             currentSnakePos += _moveOffset;
 
-            if (_mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z].Food != null)
+            if (TryEatFood(currentSnakePos))
             {
-                _mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z].Food.Value.Set<FoodChangePositionTag>();
+                snakeBody.Length++;
+            }
+            
+            if (_snakeFeature.SnakePositions.Count >= snakeBody.Length + 1)
+            {
+                _snakeFeature.SnakePositions.RemoveAt(_snakeFeature.SnakePositions.Count - 1);
             }
 
             entity.SetPosition(currentSnakePos);
 
+            for (int i = 0; i < _snakeFeature.SnakePositions.Count; i++)
+            {
+                var spawnBodyMarker = world.AddEntity();
+                
+                spawnBodyMarker.Set(new SnakePartSpawn()
+                {
+                    BodySpawnPosition = _snakeFeature.SnakePositions[i]
+                });
+            }
+
             timer = 0;
+        }
+
+        private bool TryEatFood(int3 currentSnakePos)
+        {
+            if (_mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z].Food != null)
+            {
+                _mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z].Food.Value.Set<FoodChangePositionTag>();
+                return true;
+            }
+
+            return false;
         }
 
         private static bool CanMakeStep(float timer, float snakeSpeed)

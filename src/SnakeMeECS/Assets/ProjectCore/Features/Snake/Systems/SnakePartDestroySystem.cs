@@ -1,6 +1,4 @@
 ﻿using ME.ECS;
-using ProjectCore.Features.Map.Components;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace ProjectCore.Features.Snake.Systems {
@@ -15,17 +13,16 @@ namespace ProjectCore.Features.Snake.Systems {
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class SnakeSpawnSystem : ISystemFilter {
+    public sealed class SnakePartDestroySystem : ISystemFilter 
+    {
         
         private SnakeFeature _snakeFeature;
-        private MapFeature _mapFeature;
         
         public World world { get; set; }
         
         void ISystemBase.OnConstruct() 
         {
             this.GetFeature(out _snakeFeature);
-            _mapFeature = world.GetFeature<MapFeature>();
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -37,31 +34,26 @@ namespace ProjectCore.Features.Snake.Systems {
         Filter ISystemFilter.filter { get; set; }
         Filter ISystemFilter.CreateFilter() 
         {
-            return Filter.Create("Filter-SnakeSpawnSystem")
-                .With<SnakeInitializer>()
+            return Filter.Create("Filter-SnakePartDestroy")
+                .With<Timer>()
+                .With<SnakePartDestroy>()
                 .Push();
         }
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            var matrixPosition = _snakeFeature.SnakeConfig.Get<SnakeInitializer>().SpawnSnakeMatrixPosition;
+            ref var timer = ref entity.Get<Timer>().Value;
 
-            var snakePositionFromMatrix = 
-                _mapFeature.MapMatrix[matrixPosition.x, matrixPosition.y].Position;
+            timer += deltaTime;
 
-            var targetSnakePosition = new Vector3(snakePositionFromMatrix.x, snakePositionFromMatrix.y + 1,
-                snakePositionFromMatrix.z);
+            var destroyTime = 1 / _snakeFeature.SnakeConfig.Get<SnakeMovementSpeed>().Value;
 
-            _mapFeature.MapMatrix[matrixPosition.x, matrixPosition.y].SnakePart = entity;
+            if (timer >= destroyTime)
+            {
+                world.RemoveEntity(entity);
 
-            entity.SetPosition(targetSnakePosition);
-
-            entity.Get<SnakePart>().PositionInMatrix = new int3(targetSnakePosition);
-            entity.Get<SnakePart>().IsHead = true;
-            
-            world.InstantiateView(_snakeFeature.ViewId, entity);
-
-            entity.Remove<SnakeInitializer>();
+                timer = 0;
+            }
         }
     
     }

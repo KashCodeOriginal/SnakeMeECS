@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: SnakeFeature
   m_EditorClassIdentifier: 
   editorComment: 
+  _snakePos: []
   <SnakeConfig>k__BackingField: {fileID: 11400000, guid: 33bfa5a019a98f94a852bc3d44fcb92d, type: 2}
-  _snakeView: {fileID: 1273506759060014207, guid: fb853b157ef265b4ca4e99c3bc7db549, type: 3}
+  _snakeHeadView: {fileID: 1273506759060014207, guid: fb853b157ef265b4ca4e99c3bc7db549, type: 3}
+  _snakePartView: {fileID: 3324976065067768914, guid: 59ad4c7aeeab5ad45ab5008583b7eb84, type: 3}

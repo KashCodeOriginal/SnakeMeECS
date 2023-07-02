@@ -25,8 +25,8 @@ MonoBehaviour:
       type: {class: SnakeInitializer, ns: ProjectCore.Features.Snake.Components, asm: ProjectCore}
       data:
         SpawnSnakeMatrixPosition:
-          x: 0
-          y: 0
+          x: 16
+          y: 16
     - rid: 1028594916678697920
       type: {class: SnakeMovementSpeed, ns: ProjectCore.Features.Snake.Components, asm: ProjectCore}
       data:

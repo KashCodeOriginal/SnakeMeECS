@@ -3,9 +3,8 @@ using Unity.Mathematics;
 
 namespace ProjectCore.Features.Snake.Components 
 {
-    public struct SnakePart : IComponent
+    public struct SnakeHead : IComponent
     {
         public int3 PositionInMatrix;
-        public bool IsHead;
     }
 }
