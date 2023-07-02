@@ -65,8 +65,10 @@ namespace ProjectCore.Features.Snake.Systems
             }
 
             ref var currentSnakePos = ref entity.Get<SnakeHead>().PositionInMatrix;
-            
-            _snakeFeature.SnakePositions.Insert(0, currentSnakePos);
+
+            _snakeFeature.CurrentHeadPosition = currentSnakePos;
+
+            _snakeFeature.SnakePositionsForMovement.Insert(0, currentSnakePos);
   
             SetMoveOffset(snakeDirection);
 
@@ -77,20 +79,20 @@ namespace ProjectCore.Features.Snake.Systems
                 snakeBody.Length++;
             }
             
-            if (_snakeFeature.SnakePositions.Count >= snakeBody.Length + 1)
+            if (_snakeFeature.SnakePositionsForMovement.Count >= snakeBody.Length + 1)
             {
-                _snakeFeature.SnakePositions.RemoveAt(_snakeFeature.SnakePositions.Count - 1);
+                _snakeFeature.SnakePositionsForMovement.RemoveAt(_snakeFeature.SnakePositionsForMovement.Count - 1);
             }
 
             entity.SetPosition(currentSnakePos);
 
-            for (int i = 0; i < _snakeFeature.SnakePositions.Count; i++)
+            for (int i = 0; i < _snakeFeature.SnakePositionsForMovement.Count; i++)
             {
                 var spawnBodyMarker = world.AddEntity();
                 
                 spawnBodyMarker.Set(new SnakePartSpawn()
                 {
-                    BodySpawnPosition = _snakeFeature.SnakePositions[i]
+                    BodySpawnPosition = _snakeFeature.SnakePositionsForMovement[i]
                 });
             }
 

@@ -1,6 +1,7 @@
 ﻿using ME.ECS;
 using ProjectCore.Features.Map.Components;
-using UnityEngine;
+using Unity.Mathematics;
+using Random = UnityEngine.Random;
 
 namespace ProjectCore.Features.Food.Systems {
 
@@ -18,14 +19,15 @@ namespace ProjectCore.Features.Food.Systems {
         
         private FoodFeature _foodFeature;
         private MapFeature _mapFeature;
+        private SnakeFeature _snakeFeature;
         
         public World world { get; set; }
         
-        void ISystemBase.OnConstruct() {
-            
-            this.GetFeature(out this._foodFeature);
-
+        void ISystemBase.OnConstruct() 
+        {
+            this.GetFeature(out _foodFeature);
             _mapFeature = world.GetFeature<MapFeature>();
+            _snakeFeature = world.GetFeature<SnakeFeature>();
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -35,12 +37,12 @@ namespace ProjectCore.Features.Food.Systems {
         int ISystemFilter.jobsBatchCount => 64;
         #endif
         Filter ISystemFilter.filter { get; set; }
-        Filter ISystemFilter.CreateFilter() {
+        Filter ISystemFilter.CreateFilter() 
+        {
             
             return Filter.Create("Filter-FoodPositionChangeSystem")
                 .With<FoodChangePositionTag>()
                 .Push();
-            
         }
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
@@ -49,13 +51,19 @@ namespace ProjectCore.Features.Food.Systems {
             
             int randomXMatrixPosition;
             int randomZMatrixPosition;
+            int yMatrixPosition;
+
+            int3 newFoodPosition;
             
             do
             {
                 randomXMatrixPosition = Random.Range(0,mapMatrixConfig.HorizontalCellAmount);
                 randomZMatrixPosition = Random.Range(0,mapMatrixConfig.VerticalCellAmount);
+                yMatrixPosition = mapMatrixConfig.MapHeight + 1;
+
+                newFoodPosition = new int3(randomXMatrixPosition, yMatrixPosition, randomZMatrixPosition);
             }
-            while (_mapFeature.MapMatrix[randomXMatrixPosition, randomZMatrixPosition].SnakePart != null);
+            while (_snakeFeature.GetFullSnakeBody().IndexOf(newFoodPosition) != -1);
 
             var positionInMatrix = _mapFeature.MapMatrix[randomXMatrixPosition, randomZMatrixPosition].Position;
             

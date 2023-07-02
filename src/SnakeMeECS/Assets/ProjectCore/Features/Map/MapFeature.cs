@@ -60,8 +60,7 @@ namespace ProjectCore.Features
 
                     cellEntity.Set(new CellInMatrix()
                     {
-                        Position = targetSpawnPosition,
-                        SnakePart = null
+                        Position = targetSpawnPosition
                     });
 
                     cellEntity.SetLocalPosition(targetSpawnPosition);

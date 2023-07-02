@@ -27,7 +27,9 @@ namespace ProjectCore.Features
         public ViewId SnakeHeadViewId { get; private set; }
         public ViewId SnakePartViewId { get; private set; }
 
-        public List<int3> SnakePositions = new();
+        public List<int3> SnakePositionsForMovement = new();
+
+        public int3 CurrentHeadPosition;
 
         [field: SerializeField] public DataConfig SnakeConfig { get; private set; }
         [SerializeField] private MonoBehaviourViewBase _snakeHeadView;
@@ -69,7 +71,7 @@ namespace ProjectCore.Features
 
             snakeEntity.Set(new SnakeBody()
             {
-                Length = 2
+                Length = 10
             });
         }
 
@@ -77,7 +79,13 @@ namespace ProjectCore.Features
         {
             
         }
-
+        
+        public List<int3> GetFullSnakeBody()
+        {
+            var bodyPosition = new List<int3>{new(CurrentHeadPosition)};
+            bodyPosition.AddRange(SnakePositionsForMovement);
+            return bodyPosition;
+        }
     }
 
 }

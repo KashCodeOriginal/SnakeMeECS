@@ -10,6 +10,6 @@ namespace ProjectCore.Features.Map.Components
 
         public float DistanceBetweenCells;
         
-        public float MapHeight;
+        public int MapHeight;
     }
 }

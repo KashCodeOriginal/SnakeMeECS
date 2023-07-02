@@ -52,8 +52,6 @@ namespace ProjectCore.Features.Snake.Systems {
             var targetSnakePosition = new Vector3(snakePositionFromMatrix.x, snakePositionFromMatrix.y + 1,
                 snakePositionFromMatrix.z);
 
-            _mapFeature.MapMatrix[matrixPosition.x, matrixPosition.y].SnakePart = entity;
-
             entity.SetPosition(targetSnakePosition);
 
             entity.Get<SnakeHead>().PositionInMatrix = new int3(targetSnakePosition);
