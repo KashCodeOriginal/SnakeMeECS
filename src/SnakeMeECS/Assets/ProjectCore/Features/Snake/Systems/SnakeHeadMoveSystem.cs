@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ME.ECS;
 using ProjectCore.Features.Food.Components;
+using ProjectCore.Features.Map.Components;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -57,6 +58,8 @@ namespace ProjectCore.Features.Snake.Systems
             var snakeSpeed = 1 / _snakeFeature.SnakeConfig.Read<SnakeMovementSpeed>().Value;
             var snakeDirection = entity.Read<SnakeMoveDirection>().currentDirection;
 
+            var mapProperties = _mapFeature.MapConfig.Read<MapProperties>();
+
             timer += deltaTime;
 
             if (!CanMakeStep(timer, snakeSpeed))
@@ -73,6 +76,8 @@ namespace ProjectCore.Features.Snake.Systems
             SetMoveOffset(snakeDirection);
 
             currentSnakePos += _moveOffset;
+            
+            currentSnakePos = CheckForOutOfBorders(currentSnakePos, mapProperties);
 
             if (TryEatFood(currentSnakePos))
             {
@@ -86,17 +91,44 @@ namespace ProjectCore.Features.Snake.Systems
 
             entity.SetPosition(currentSnakePos);
 
+            SpawnBodyParts();
+
+            timer = 0;
+        }
+
+        private void SpawnBodyParts()
+        {
             for (int i = 0; i < _snakeFeature.SnakePositionsForMovement.Count; i++)
             {
                 var spawnBodyMarker = world.AddEntity();
-                
+
                 spawnBodyMarker.Set(new SnakePartSpawn()
                 {
                     BodySpawnPosition = _snakeFeature.SnakePositionsForMovement[i]
                 });
             }
+        }
 
-            timer = 0;
+        private static int3 CheckForOutOfBorders(int3 currentSnakePos, MapProperties mapProperties)
+        {
+            if (currentSnakePos.x < 0)
+            {
+                currentSnakePos.x = mapProperties.HorizontalCellAmount - 1;
+            }
+            else if (currentSnakePos.x > mapProperties.HorizontalCellAmount - 1)
+            {
+                currentSnakePos.x = 0;
+            }
+            else if (currentSnakePos.z < 0)
+            {
+                currentSnakePos.z = mapProperties.VerticalCellAmount - 1;
+            }
+            else if (currentSnakePos.z > mapProperties.VerticalCellAmount - 1)
+            {
+                currentSnakePos.z = 0;
+            }
+
+            return currentSnakePos;
         }
 
         private bool TryEatFood(int3 currentSnakePos)

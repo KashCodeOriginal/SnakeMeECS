@@ -71,7 +71,7 @@ namespace ProjectCore.Features
 
             snakeEntity.Set(new SnakeBody()
             {
-                Length = 10
+                Length = 2
             });
         }
 
