@@ -147,7 +147,7 @@ namespace ProjectCore.Features.Snake.Systems
 
                 currentCell.Food.Value.Set<FoodChangePosition>();
 
-                if (_foodFeature.CurrentEatenApplesForBanana >= 2)
+                if (_foodFeature.CurrentEatenApplesForBanana >= 5)
                 {
                     AddBananaToMap();
                 }
