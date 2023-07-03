@@ -21,6 +21,7 @@ namespace ProjectCore.Features.Snake.Systems
     {
         private SnakeFeature _snakeFeature;
         private MapFeature _mapFeature;
+        private FoodFeature _foodFeature;
 
         private int3 _moveOffset;
         
@@ -31,6 +32,7 @@ namespace ProjectCore.Features.Snake.Systems
             this.GetFeature(out _snakeFeature);
             
             _mapFeature = world.GetFeature<MapFeature>();
+            _foodFeature = world.GetFeature<FoodFeature>();
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -53,7 +55,7 @@ namespace ProjectCore.Features.Snake.Systems
         {
             ref var timer = ref entity.Get<Timer>().Value;
 
-            ref var  snakeBody = ref entity.Get<SnakeBody>();
+            ref var snakeBody = ref entity.Get<SnakeBody>();
             
             var snakeSpeed = 1 / _snakeFeature.SnakeConfig.Read<SnakeMovementSpeed>().Value;
             var snakeDirection = entity.Read<SnakeMoveDirection>().currentDirection;
@@ -79,11 +81,8 @@ namespace ProjectCore.Features.Snake.Systems
             
             currentSnakePos = CheckForOutOfBorders(currentSnakePos, mapProperties);
 
-            if (TryEatFood(currentSnakePos))
-            {
-                snakeBody.Length++;
-            }
-            
+            TryEatFood(currentSnakePos,ref snakeBody);
+
             if (_snakeFeature.SnakePositionsForMovement.Count >= snakeBody.Length + 1)
             {
                 _snakeFeature.SnakePositionsForMovement.RemoveAt(_snakeFeature.SnakePositionsForMovement.Count - 1);
@@ -131,15 +130,58 @@ namespace ProjectCore.Features.Snake.Systems
             return currentSnakePos;
         }
 
-        private bool TryEatFood(int3 currentSnakePos)
+        private void TryEatFood(int3 currentSnakePos, ref SnakeBody snakeBody)
         {
-            if (_mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z].Food != null)
+            ref var currentCell = ref _mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z];
+            
+            if (currentCell.Food == null)
             {
-                _mapFeature.MapMatrix[currentSnakePos.x, currentSnakePos.z].Food.Value.Set<FoodChangePositionTag>();
-                return true;
+                return;
             }
 
-            return false;
+            if (currentCell.Food.Value.Get<FoodSpawn>().FoodType == FoodType.Apple)
+            {
+                snakeBody.Length += 1;
+                
+                _foodFeature.CurrentEatenApplesForBanana++;
+
+                currentCell.Food.Value.Set<FoodChangePosition>();
+
+                if (_foodFeature.CurrentEatenApplesForBanana >= 2)
+                {
+                    AddBananaToMap();
+                }
+            }
+            else if (currentCell.Food.Value.Get<FoodSpawn>().FoodType == FoodType.Banana)
+            {
+                snakeBody.Length += 2;
+                currentCell.Food.Value.Set<DestroyImmediately>();
+            }
+            
+            currentCell.Food = null;
+        }
+
+        private void AddBananaToMap()
+        {
+            var bananaEntity = world.AddEntity();
+
+            bananaEntity.Set(new FoodSpawn()
+            {
+                FoodType = FoodType.Banana
+            });
+
+            bananaEntity.Set<FoodSpawnTag>();
+
+            bananaEntity.Set<Timer>();
+
+            bananaEntity.Set(new DestroyAfterTime()
+            {
+                TimeToDestroy = 5f
+            });
+
+            bananaEntity.Set<FoodChangePosition>();
+
+            _foodFeature.CurrentEatenApplesForBanana = 0;
         }
 
         private static bool CanMakeStep(float timer, float snakeSpeed)

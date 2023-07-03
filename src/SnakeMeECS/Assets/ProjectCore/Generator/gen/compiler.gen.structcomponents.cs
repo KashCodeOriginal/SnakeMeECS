@@ -9,7 +9,9 @@ namespace ME.ECS {
             CoreComponentsInitializer.InitTypeId();
 
 
+            WorldUtilities.InitComponentTypeId<ProjectCore.Components.DestroyAfterTime>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Components.Timer>(false, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodSpawn>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Map.Components.CellInMatrix>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Map.Components.MapProperties>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeBody>(false, true, true, false, false, false, false, false, false);
@@ -18,8 +20,9 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeMoveDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeMovementSpeed>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakePartSpawn>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodChangePositionTag>(true, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodInitializer>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<ProjectCore.Components.DestroyImmediately>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodChangePosition>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodSpawnTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Map.Components.CellInitializer>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakePartDestroy>(true, true, true, false, false, false, false, false, false);
 
@@ -32,7 +35,9 @@ namespace ME.ECS {
             CoreComponentsInitializer.InitTypeId();
 
 
+            WorldUtilities.InitComponentTypeId<ProjectCore.Components.DestroyAfterTime>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Components.Timer>(false, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodSpawn>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Map.Components.CellInMatrix>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Map.Components.MapProperties>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeBody>(false, true, true, false, false, false, false, false, false);
@@ -41,8 +46,9 @@ namespace ME.ECS {
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeMoveDirection>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakeMovementSpeed>(false, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakePartSpawn>(false, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodChangePositionTag>(true, true, true, false, false, false, false, false, false);
-            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodInitializer>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<ProjectCore.Components.DestroyImmediately>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodChangePosition>(true, true, true, false, false, false, false, false, false);
+            WorldUtilities.InitComponentTypeId<ProjectCore.Features.Food.Components.FoodSpawnTag>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Map.Components.CellInitializer>(true, true, true, false, false, false, false, false, false);
             WorldUtilities.InitComponentTypeId<ProjectCore.Features.Snake.Components.SnakePartDestroy>(true, true, true, false, false, false, false, false, false);
 
@@ -50,7 +56,9 @@ namespace ME.ECS {
             CoreComponentsInitializer.Init(state, ref noState);
 
 
+            state.structComponents.ValidateUnmanaged<ProjectCore.Components.DestroyAfterTime>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<ProjectCore.Components.Timer>(ref state.allocator, false);
+            state.structComponents.ValidateUnmanaged<ProjectCore.Features.Food.Components.FoodSpawn>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Map.Components.CellInMatrix>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Map.Components.MapProperties>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakeBody>(ref state.allocator, false);
@@ -59,8 +67,9 @@ namespace ME.ECS {
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakeMoveDirection>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakeMovementSpeed>(ref state.allocator, false);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakePartSpawn>(ref state.allocator, false);
-            state.structComponents.ValidateUnmanaged<ProjectCore.Features.Food.Components.FoodChangePositionTag>(ref state.allocator, true);
-            state.structComponents.ValidateUnmanaged<ProjectCore.Features.Food.Components.FoodInitializer>(ref state.allocator, true);
+            state.structComponents.ValidateUnmanaged<ProjectCore.Components.DestroyImmediately>(ref state.allocator, true);
+            state.structComponents.ValidateUnmanaged<ProjectCore.Features.Food.Components.FoodChangePosition>(ref state.allocator, true);
+            state.structComponents.ValidateUnmanaged<ProjectCore.Features.Food.Components.FoodSpawnTag>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Map.Components.CellInitializer>(ref state.allocator, true);
             state.structComponents.ValidateUnmanaged<ProjectCore.Features.Snake.Components.SnakePartDestroy>(ref state.allocator, true);
 
@@ -73,7 +82,9 @@ namespace ME.ECS {
         public static void Init(Entity entity) {
 
 
+            entity.ValidateDataUnmanaged<ProjectCore.Components.DestroyAfterTime>(false);
             entity.ValidateDataUnmanaged<ProjectCore.Components.Timer>(false);
+            entity.ValidateDataUnmanaged<ProjectCore.Features.Food.Components.FoodSpawn>(false);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Map.Components.CellInMatrix>(false);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Map.Components.MapProperties>(false);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakeBody>(false);
@@ -82,8 +93,9 @@ namespace ME.ECS {
             entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakeMoveDirection>(false);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakeMovementSpeed>(false);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakePartSpawn>(false);
-            entity.ValidateDataUnmanaged<ProjectCore.Features.Food.Components.FoodChangePositionTag>(true);
-            entity.ValidateDataUnmanaged<ProjectCore.Features.Food.Components.FoodInitializer>(true);
+            entity.ValidateDataUnmanaged<ProjectCore.Components.DestroyImmediately>(true);
+            entity.ValidateDataUnmanaged<ProjectCore.Features.Food.Components.FoodChangePosition>(true);
+            entity.ValidateDataUnmanaged<ProjectCore.Features.Food.Components.FoodSpawnTag>(true);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Map.Components.CellInitializer>(true);
             entity.ValidateDataUnmanaged<ProjectCore.Features.Snake.Components.SnakePartDestroy>(true);
 

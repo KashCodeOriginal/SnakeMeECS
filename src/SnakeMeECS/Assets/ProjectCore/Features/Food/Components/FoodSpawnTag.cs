@@ -2,5 +2,5 @@
 
 namespace ProjectCore.Features.Food.Components
 {
-    public struct FoodChangePositionTag : IComponent { }
+    public struct FoodSpawnTag : IComponent { }
 }

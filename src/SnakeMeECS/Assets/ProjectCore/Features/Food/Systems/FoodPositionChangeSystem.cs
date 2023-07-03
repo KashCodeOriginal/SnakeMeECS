@@ -39,9 +39,8 @@ namespace ProjectCore.Features.Food.Systems {
         Filter ISystemFilter.filter { get; set; }
         Filter ISystemFilter.CreateFilter() 
         {
-            
             return Filter.Create("Filter-FoodPositionChangeSystem")
-                .With<FoodChangePositionTag>()
+                .With<FoodChangePosition>()
                 .Push();
         }
 
@@ -71,7 +70,7 @@ namespace ProjectCore.Features.Food.Systems {
 
             _mapFeature.MapMatrix[randomXMatrixPosition, randomZMatrixPosition].Food = entity;
 
-            entity.Remove<FoodChangePositionTag>();
+            entity.Remove<FoodChangePosition>();
         }
     }
 }

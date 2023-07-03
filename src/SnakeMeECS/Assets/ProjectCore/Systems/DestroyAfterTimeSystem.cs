@@ -1,10 +1,6 @@
 ﻿using ME.ECS;
-using ProjectCore.Features.Map.Components;
-using Unity.Mathematics;
-using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace ProjectCore.Features.Food.Systems {
+namespace ProjectCore.Systems {
 
     #pragma warning disable
     using ProjectCore.Components; using ProjectCore.Modules; using ProjectCore.Systems; using ProjectCore.Markers;
@@ -16,16 +12,11 @@ namespace ProjectCore.Features.Food.Systems {
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class FoodSpawnSystem : ISystemFilter 
-    {
-        private FoodFeature _foodFeature;
+    public sealed class DestroyAfterTimeSystem : ISystemFilter {
         
         public World world { get; set; }
         
-        void ISystemBase.OnConstruct() 
-        {
-            this.GetFeature(out this._foodFeature);
-        }
+        void ISystemBase.OnConstruct() {}
         
         void ISystemBase.OnDeconstruct() {}
         
@@ -34,29 +25,25 @@ namespace ProjectCore.Features.Food.Systems {
         int ISystemFilter.jobsBatchCount => 64;
         #endif
         Filter ISystemFilter.filter { get; set; }
-        Filter ISystemFilter.CreateFilter() 
-        {
-            return Filter.Create("Filter-FoodSpawnSystem")
-                .With<FoodSpawn>()
-                .With<FoodSpawnTag>()
+        Filter ISystemFilter.CreateFilter() {
+            
+            return Filter.Create("Filter-DestroyAfterTimeSystem")
+                .With<DestroyAfterTime>()
+                .With<Timer>()
                 .Push();
         }
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            var foodType = entity.Get<FoodSpawn>().FoodType;
+            ref var timer = ref entity.Get<Timer>().Value;
+            var destroyTime = entity.Read<DestroyAfterTime>().TimeToDestroy;
 
-            if (foodType == FoodType.Apple)
-            {
-                world.InstantiateView(_foodFeature.AppleViewId, entity);
-            }
-            else if (foodType == FoodType.Banana)
-            {
-                world.InstantiateView(_foodFeature.BananaViewId, entity);
-            }
+            timer += deltaTime;
 
-            entity.Remove<FoodSpawnTag>();
+            if (timer >= destroyTime)
+            {
+                world.RemoveEntity(entity);
+            }
         }
     }
-    
 }

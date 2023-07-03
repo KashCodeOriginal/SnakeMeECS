@@ -33,6 +33,8 @@ namespace ProjectCore.Features
         protected override void OnConstruct()
         {
             AddSystem<CellSpawnSystem>();
+            AddSystem<DestroyAfterTimeSystem>();
+            AddSystem<DestroyImmediatelySystem>();
             
             ViewId = world.RegisterViewSource(_cellView);
         }

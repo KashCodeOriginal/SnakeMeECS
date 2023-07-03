@@ -24,6 +24,8 @@ namespace ProjectCore.Features
     {
         public ViewId AppleViewId { get; private set; }
         public ViewId BananaViewId { get; private set; }
+
+        public int CurrentEatenApplesForBanana;
         
         [SerializeField] private MonoBehaviourView _appleView;
         [SerializeField] private MonoBehaviourView _bananaView;
@@ -39,10 +41,16 @@ namespace ProjectCore.Features
 
         protected override void OnConstructLate()
         {
-            var foodEntity = world.AddEntity();
+            var appleEntity = world.AddEntity();
 
-            foodEntity.Set<FoodInitializer>();
-            foodEntity.Set<FoodChangePositionTag>();
+            appleEntity.Set(new FoodSpawn()
+            {
+                FoodType = FoodType.Apple
+            });
+
+            appleEntity.Set<FoodSpawnTag>();
+            
+            appleEntity.Set<FoodChangePosition>();
         }
 
         protected override void OnDeconstruct() 
