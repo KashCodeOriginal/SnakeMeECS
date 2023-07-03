@@ -1,4 +1,4 @@
-namespace Infrastructure.ProjectStateMachine.Base
+namespace OOP.Infrastructure.ProjectStateMachine.Base
 {
     public interface IState<out TInitializer>
     {
