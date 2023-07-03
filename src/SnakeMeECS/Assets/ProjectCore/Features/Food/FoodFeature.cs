@@ -2,6 +2,7 @@
 using ME.ECS.DataConfigs;
 using ME.ECS.Views.Providers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ProjectCore.Features 
 {
@@ -21,16 +22,19 @@ namespace ProjectCore.Features
     #endif
     public sealed class FoodFeature : Feature
     {
-        public ViewId ViewId { get; private set; }
+        public ViewId AppleViewId { get; private set; }
+        public ViewId BananaViewId { get; private set; }
         
-        [SerializeField] private MonoBehaviourView _foodView;
+        [SerializeField] private MonoBehaviourView _appleView;
+        [SerializeField] private MonoBehaviourView _bananaView;
         
         protected override void OnConstruct() 
         {
             AddSystem<FoodSpawnSystem>();
             AddSystem<FoodPositionChangeSystem>();
             
-            ViewId = world.RegisterViewSource(_foodView);
+            AppleViewId = world.RegisterViewSource(_appleView);
+            BananaViewId = world.RegisterViewSource(_bananaView);
         }
 
         protected override void OnConstructLate()
@@ -45,7 +49,6 @@ namespace ProjectCore.Features
         {
             
         }
-
     }
 
 }

@@ -43,7 +43,7 @@ namespace ProjectCore.Features.Food.Systems {
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            world.InstantiateView(_foodFeature.ViewId, entity);
+            world.InstantiateView(_foodFeature.AppleViewId, entity);
             
             entity.Remove<FoodInitializer>();
         }

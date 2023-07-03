@@ -1,11 +1,10 @@
 ﻿using ME.ECS;
+using ME.ECS.Views.Providers;
 
-namespace ProjectCore.Features.Snake.Views {
-    
-    using ME.ECS.Views.Providers;
-    
-    public class SnakePartView : MonoBehaviourView {
-        
+namespace ProjectCore.Features.Snake.Views 
+{
+    public class SnakeView : MonoBehaviourView
+    {
         public override bool applyStateJob => true;
 
         public override void OnInitialize() 
@@ -23,7 +22,7 @@ namespace ProjectCore.Features.Snake.Views {
             
         }
         
-        public override void ApplyState(float deltaTime, bool immediately)
+        public override void ApplyState(float deltaTime, bool immediately) 
         {
             transform.position = entity.GetPosition();
         }

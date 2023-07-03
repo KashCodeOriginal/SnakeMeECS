@@ -4,7 +4,8 @@ namespace ProjectCore.Features.Food.Views {
     
     using ME.ECS.Views.Providers;
     
-    public class FoodView : MonoBehaviourView {
+    public class FoodView : MonoBehaviourView 
+    {
         
         public override bool applyStateJob => true;
 

@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 5400429413219574483}
   - component: {fileID: 5400429413219574492}
   - component: {fileID: 5400429413219574493}
-  - component: {fileID: 1273506759060014207}
+  - component: {fileID: 2491466858932333377}
   m_Layer: 0
   m_Name: SnakeHeadPrefab
   m_TagString: Untagged
@@ -433,7 +433,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1273506759060014207
+--- !u!114 &2491466858932333377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -462,7 +462,7 @@ MonoBehaviour:
     useCacheTimeout: 0
     cacheTimeout: 0
   interpolationParameters:
-    enabled: 1
+    enabled: 0
     movementSpeed: 0
     rotationSpeed: 0
   parentParameters:

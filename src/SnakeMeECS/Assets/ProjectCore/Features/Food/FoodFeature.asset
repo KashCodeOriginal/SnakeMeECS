@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: FoodFeature
   m_EditorClassIdentifier: 
   editorComment: 
-  _dataConfig: {fileID: 0}
-  _foodView: {fileID: 3154779369698865684, guid: 52b1330e33c17e34483a83263b9a5b7d, type: 3}
+  _appleView: {fileID: 3154779369698865684, guid: 52b1330e33c17e34483a83263b9a5b7d, type: 3}
+  _bananaView: {fileID: 5345510381863770479, guid: 97c2bafcf0646ca4d8e370c7109e9d77, type: 3}
