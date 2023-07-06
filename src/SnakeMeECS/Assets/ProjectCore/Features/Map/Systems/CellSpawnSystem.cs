@@ -14,14 +14,13 @@ namespace ProjectCore.Features.Map.Systems {
     #endif
     public sealed class CellSpawnSystem : ISystemFilter 
     {
-        
-        private MapFeature feature;
+        private MapFeature _mapFeature;
         
         public World world { get; set; }
         
         void ISystemBase.OnConstruct() {
             
-            this.GetFeature(out this.feature);
+            this.GetFeature(out this._mapFeature);
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -35,12 +34,13 @@ namespace ProjectCore.Features.Map.Systems {
             
             return Filter.Create("Filter-CellSpawnSystem").
                 With<CellInitializer>().
+                With<CellInMatrix>().
                 Push();
         }
 
         void ISystemFilter.AdvanceTick(in Entity entity, in float deltaTime)
         {
-            world.InstantiateView(feature.ViewId, entity);
+            world.InstantiateView(_mapFeature.FirstCellViewId, entity);
 
             entity.Remove<CellInitializer>();   
         }

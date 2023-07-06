@@ -2,6 +2,7 @@
 using ME.ECS.DataConfigs;
 using ME.ECS.Views.Providers;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ProjectCore.Features 
 {
@@ -21,12 +22,12 @@ namespace ProjectCore.Features
     #endif
     public sealed class MapFeature : Feature 
     {
-        public ViewId ViewId { get; private set; }
+        public ViewId FirstCellViewId { get; private set; }
 
         public CellInMatrix[,] MapMatrix;
         
         [field: SerializeField] public DataConfig MapConfig { get; private set; }
-        [SerializeField] private MonoBehaviourViewBase _cellView;
+        [SerializeField] private MonoBehaviourViewBase _firstCellView;
 
         private Vector3 _cornerPosition;
         
@@ -36,7 +37,7 @@ namespace ProjectCore.Features
             AddSystem<DestroyAfterTimeSystem>();
             AddSystem<DestroyImmediatelySystem>();
             
-            ViewId = world.RegisterViewSource(_cellView);
+            FirstCellViewId = world.RegisterViewSource(_firstCellView);
         }
 
         protected override void OnConstructLate()

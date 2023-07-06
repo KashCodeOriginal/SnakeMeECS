@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   editorComment: 
   <MapConfig>k__BackingField: {fileID: 11400000, guid: e121a96611b5e204f82286e847a66804, type: 2}
-  _cellView: {fileID: 4778209411576359546, guid: c07271faca433ba48a7b785221a49981, type: 3}
+  _firstCellView: {fileID: 4778209411576359546, guid: c07271faca433ba48a7b785221a49981, type: 3}
+  _cornerCellView: {fileID: 4778209411576359546, guid: 806a2646d8dbb0a40acce5926356416c, type: 3}
