@@ -3,8 +3,9 @@
 namespace OOP.Services.WebSocketsService
 {
     [Serializable]
-    public class GamePost
+    public class GameEndGet
     {
         public string type;
+        public GameEndGetPayLoad payload;
     }
 }

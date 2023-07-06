@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ME.ECS;
+using OOP.Services.Locator;
+using OOP.Services.WebSocketsService;
 using ProjectCore.Features.Food.Components;
 using ProjectCore.Features.Map.Components;
 using Unity.Mathematics;
@@ -24,6 +27,8 @@ namespace ProjectCore.Features.Snake.Systems
         private FoodFeature _foodFeature;
 
         private int3 _moveOffset;
+
+        private IWebSocketsService _webSocketsService;
         
         public World world { get; set; }
         
@@ -33,6 +38,8 @@ namespace ProjectCore.Features.Snake.Systems
             
             _mapFeature = world.GetFeature<MapFeature>();
             _foodFeature = world.GetFeature<FoodFeature>();
+
+            _webSocketsService = ServiceLocator.Container.Single<IWebSocketsService>();
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -71,14 +78,19 @@ namespace ProjectCore.Features.Snake.Systems
 
             ref var currentSnakePos = ref entity.Get<SnakeHead>().PositionInMatrix;
 
+            if (CheckForDeath(entity, currentSnakePos))
+            {
+                return;
+            }
+
             _snakeFeature.CurrentHeadPosition = currentSnakePos;
 
             _snakeFeature.SnakePositionsForMovement.Insert(0, currentSnakePos);
-  
+            
             SetMoveOffset(snakeDirection);
 
             currentSnakePos += _moveOffset;
-            
+
             currentSnakePos = CheckForOutOfBorders(currentSnakePos, mapProperties);
 
             TryEatFood(currentSnakePos,ref snakeBody);
@@ -93,6 +105,21 @@ namespace ProjectCore.Features.Snake.Systems
             SpawnBodyParts();
 
             timer = 0;
+        }
+
+        private bool CheckForDeath(Entity entity, int3 currentSnakePos)
+        {
+            if (!_snakeFeature.SnakePositionsForMovement.Any(position =>
+                    position.x == currentSnakePos.x && position.z == currentSnakePos.z))
+            {
+                return false;
+            }
+            
+            entity.Remove<SnakeMovementSpeed>();
+                    
+            _webSocketsService.PostEndGame();
+
+            return true;
         }
 
         private void SpawnBodyParts()
@@ -142,6 +169,7 @@ namespace ProjectCore.Features.Snake.Systems
             if (currentCell.Food.Value.Get<FoodSpawn>().FoodType == FoodType.Apple)
             {
                 snakeBody.Length += 1;
+                snakeBody.ApplesEaten += 1;
                 
                 _foodFeature.CurrentEatenApplesForBanana++;
 
@@ -151,6 +179,8 @@ namespace ProjectCore.Features.Snake.Systems
                 {
                     AddBananaToMap();
                 }
+                
+                _webSocketsService.PostSnakeCollectedApple(snakeBody.ApplesEaten, snakeBody.Length);
             }
             else if (currentCell.Food.Value.Get<FoodSpawn>().FoodType == FoodType.Banana)
             {

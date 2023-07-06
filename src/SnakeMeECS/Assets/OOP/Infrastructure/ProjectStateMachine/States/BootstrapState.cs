@@ -27,14 +27,4 @@ namespace OOP.Infrastructure.ProjectStateMachine.States
             Initializer.StateMachine.SwitchState<MainMenuState>();
         }
     }
-    
-    public class GameplayState : IState<GameBootstrap>
-    {
-        public GameBootstrap Initializer { get; }
-
-        public GameplayState(GameBootstrap initializer)
-        {
-            Initializer = initializer;
-        }
-    }
 }

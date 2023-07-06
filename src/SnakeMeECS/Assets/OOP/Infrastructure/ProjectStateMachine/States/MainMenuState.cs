@@ -29,7 +29,7 @@ namespace OOP.Infrastructure.ProjectStateMachine.States
 
         private void OnPlayButtonClicked()
         {
-            _webSocketsService.GetNewGame();
+            _webSocketsService.PostNewGame();
             
             Initializer.StateMachine.SwitchState<GameLoadingState>();
         }

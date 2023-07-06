@@ -1,7 +1,10 @@
-﻿namespace OOP.Services.WebSocketsService
+﻿using System;
+
+namespace OOP.Services.WebSocketsService
 {
+    [Serializable]
     public class GameEndPostPayLoad
     {
-        public long game_id { get; set; }
+        public long game_id;
     }
 }

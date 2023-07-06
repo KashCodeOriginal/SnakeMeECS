@@ -14,9 +14,10 @@ namespace OOP.Services.WebSocketsService
         private const string URL = "wss://dev.match.qubixinfinity.io/snake";
 
         private readonly WSConnection _wsConnection = new(URL);
+
+        private long _gameID;
         
-        public long GameID;
-        public int ApplesCount;
+        
         
         public WebSocketsService()
         {
@@ -38,6 +39,8 @@ namespace OOP.Services.WebSocketsService
             _wsConnection.OnMessage(message =>
             {
                 var messageType = message.ToDeserialized<BaseTypeDeserializer>();
+                
+                Debug.Log(message);
 
                 switch (messageType.type)
                 {
@@ -45,10 +48,23 @@ namespace OOP.Services.WebSocketsService
                     {
                         var gameCreated = message.ToDeserialized<GameGet>();
 
-                        GameID = gameCreated.payload.id;
+                        _gameID = gameCreated.payload.id;
                         
                         OnGameInitialized?.Invoke();
                         
+                        break;
+                    }
+                    case "game-ended":
+                    {
+                        var gameEnded = message.ToDeserialized<GameEndGet>();
+                        
+                        Debug.Log(message);
+
+                        break;
+                    }
+                    case "error":
+                    {
+                        Debug.Log("Введены неверные данные");
                         break;
                     }
                 }
@@ -57,7 +73,7 @@ namespace OOP.Services.WebSocketsService
             _wsConnection.Connect();
         }
 
-        public void GetNewGame()
+        public void PostNewGame()
         {
             var newGame = new GameGet
             {
@@ -65,6 +81,36 @@ namespace OOP.Services.WebSocketsService
             };
             
             _wsConnection.SendMessage(newGame.ToJson());
+        }
+
+        public void PostSnakeCollectedApple(long appleCount, long snakeLenght)
+        {
+            var gamePost = new GameStatsPost()
+            {
+                type = "collect-apple",
+                payload = new GameStatsPostPayLoad()
+                {
+                    appleCount = appleCount,
+                    snakeLength = snakeLenght,
+                    game_id = _gameID
+                }
+            };
+            
+            _wsConnection.SendMessage(gamePost.ToJson());
+        }
+
+        public void PostEndGame()
+        {
+            var gameEndPost = new GameEndPost()
+            {
+                type = "end-game",
+                payload = new GameEndPostPayLoad()
+                {
+                    game_id = _gameID
+                }
+            };
+
+            _wsConnection.SendMessage(gameEndPost.ToJson());
         }
     }
 }

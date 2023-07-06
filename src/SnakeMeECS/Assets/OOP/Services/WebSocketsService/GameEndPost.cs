@@ -1,8 +1,11 @@
-﻿namespace OOP.Services.WebSocketsService
+﻿using System;
+
+namespace OOP.Services.WebSocketsService
 {
+    [Serializable]
     public class GameEndPost
     {
-        public string type { get; set; }
-        public GameEndPostPayLoad payload { get; set; }
+        public string type;
+        public GameEndPostPayLoad payload;
     }
 }
