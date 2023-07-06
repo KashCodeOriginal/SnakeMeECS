@@ -15,11 +15,11 @@ namespace ProjectCore.Features.Snake.Systems {
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.ArrayBoundsChecks, false),
      Unity.IL2CPP.CompilerServices.Il2CppSetOptionAttribute(Unity.IL2CPP.CompilerServices.Option.DivideByZeroChecks, false)]
     #endif
-    public sealed class SnakeHeadSpawnSystem  : ISystemFilter {
-        
+    public sealed class SnakeHeadSpawnSystem  : ISystemFilter 
+    {
         private SnakeFeature _snakeFeature;
         private MapFeature _mapFeature;
-        
+
         public World world { get; set; }
         
         void ISystemBase.OnConstruct() 

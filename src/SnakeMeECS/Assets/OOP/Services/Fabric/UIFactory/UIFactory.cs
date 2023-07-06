@@ -34,14 +34,17 @@ namespace OOP.Services.Fabric.UIFactory
             Object.Destroy(MainMenuScreen);
         }
 
-        public Task<GameObject> CreateGameLoadingScreen()
+        public async Task<GameObject> CreateGameLoadingScreen()
         {
-            return null;
+            var screenPrefab = await _assetsAddressablesProvider.GetAsset<GameObject>(AssetsAddressableConstants.GAME_LOADING_SCREEN);
+            GameLoadingScreen = Object.Instantiate(screenPrefab);
+
+            return GameLoadingScreen;
         }
 
         public void DestroyGameLoadingScreen()
         {
-            
+            Object.Destroy(GameLoadingScreen);
         }
 
         public Task<GameObject> CreateGameplayScreen()

@@ -5,6 +5,6 @@ namespace ProjectCore.Features.Snake.Components {
 
     public struct SnakeBody : IComponent
     {
-        [FormerlySerializedAs("Lenght")] public int Length;
+        public int Length;
     }
 }

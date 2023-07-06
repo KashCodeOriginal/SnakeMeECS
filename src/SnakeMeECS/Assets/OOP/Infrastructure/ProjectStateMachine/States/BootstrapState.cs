@@ -1,25 +1,40 @@
-﻿using OOP.Infrastructure.ProjectStateMachine.Base;
+﻿using OOP.Data;
+using OOP.Infrastructure.ProjectStateMachine.Base;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace OOP.Infrastructure.ProjectStateMachine.States
 {
-    public class BootstrapState : IEnterable
+    public class BootstrapState : IEnterable, IState<GameBootstrap>
     {
-        public void OnEnter()
+        public GameBootstrap Initializer { get; }
+
+        public BootstrapState(GameBootstrap initializer)
         {
-            throw new System.NotImplementedException();
+            Initializer = initializer;
+        }
+
+        public async void OnEnter()
+        {
+            var asyncOperationHandle = Addressables.LoadSceneAsync(AssetsAddressableConstants.MAIN_MENU_SCENE);
+            await asyncOperationHandle.Task;
+        
+            OnLoadComplete();
+        }
+
+        private void OnLoadComplete()
+        {
+            Initializer.StateMachine.SwitchState<MainMenuState>();
         }
     }
     
-    public class MainMenuState : IEnterable, IExitable
+    public class GameplayState : IState<GameBootstrap>
     {
-        public void OnEnter()
-        {
-            throw new System.NotImplementedException();
-        }
+        public GameBootstrap Initializer { get; }
 
-        public void OnExit()
+        public GameplayState(GameBootstrap initializer)
         {
-            throw new System.NotImplementedException();
+            Initializer = initializer;
         }
     }
 }

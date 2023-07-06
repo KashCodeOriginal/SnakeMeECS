@@ -267,6 +267,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "nl.elraccoone.web-sockets": {
+      "version": "https://github.com/jeffreylanters/unity-web-sockets.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "36f720f7b38ec339d7e672a850cb6df1a26929af"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,
