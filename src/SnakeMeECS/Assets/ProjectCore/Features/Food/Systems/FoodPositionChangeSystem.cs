@@ -58,13 +58,14 @@ namespace ProjectCore.Features.Food.Systems {
             {
                 randomXMatrixPosition = Random.Range(0,mapMatrixConfig.HorizontalCellAmount);
                 randomZMatrixPosition = Random.Range(0,mapMatrixConfig.VerticalCellAmount);
-                yMatrixPosition = mapMatrixConfig.MapHeight + 1;
+                yMatrixPosition = 0;
 
                 newFoodPosition = new int3(randomXMatrixPosition, yMatrixPosition, randomZMatrixPosition);
             }
             while (_snakeFeature.GetFullSnakeBody().IndexOf(newFoodPosition) != -1);
 
             var positionInMatrix = _mapFeature.MapMatrix[randomXMatrixPosition, randomZMatrixPosition].Position;
+            positionInMatrix.y = mapMatrixConfig.MapHeight + 1;
             
             entity.SetPosition(positionInMatrix);
 

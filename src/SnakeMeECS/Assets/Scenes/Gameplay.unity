@@ -133,7 +133,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: tickTime
-      value: 0.01
+      value: 0.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: entitiesCapacity
+      value: 3000
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: selectedConfiguration
@@ -165,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: configurations.Array.data[0].defines.Array.size
-      value: 23
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: configurations.Array.data[1].defines.Array.size
@@ -304,6 +308,10 @@ PrefabInstance:
       value: WORLD_MARKERS_MANAGED
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: configurations.Array.data[0].defines.Array.data[23].name
+      value: TRANSFORM_HIERARCHY_SUPPORT
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: configurations.Array.data[1].defines.Array.data[10].name
       value: BUFFER_SLICED_DISABLED
       objectReference: {fileID: 0}
@@ -372,11 +380,19 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: configurations.Array.data[0].defines.Array.data[6].enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: configurations.Array.data[0].defines.Array.data[8].enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: configurations.Array.data[0].defines.Array.data[9].enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
+      propertyPath: configurations.Array.data[0].defines.Array.data[23].enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}

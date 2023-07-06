@@ -34,7 +34,7 @@ namespace OOP
             StateMachine = new StateMachine<GameBootstrap>(new BootstrapState(this),
                 new MainMenuState(this, GetAsset<IUIFactory>(), GetAsset<IWebSocketsService>()),
                 new GameLoadingState(this, GetAsset<IUIFactory>(), GetAsset<IWebSocketsService>()),
-                new GameplayState(this));
+                new GameplayState(this, GetAsset<IUIFactory>()));
             
             StateMachine.SwitchState<BootstrapState>();
         }

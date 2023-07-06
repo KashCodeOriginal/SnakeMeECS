@@ -70,6 +70,61 @@
                     "action": "WASDInput",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "MobileInput",
+                    "id": "3546fced-d777-4987-bd3c-3ab9dd1d7b07",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASDInput",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "922ae553-ae23-4b94-8f77-8443abef6c86",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASDInput",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "c7f2fb57-5c14-4565-83dc-6bccdab1f6c7",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASDInput",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "56bd7cd0-5e00-47a6-ba60-e2eb655ff2b5",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASDInput",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "a260a654-3973-49da-b864-f51a9565b462",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WASDInput",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
