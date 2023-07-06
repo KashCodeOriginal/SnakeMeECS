@@ -25,7 +25,7 @@ namespace OOP
         private void RegisterServices()
         {
             ServiceLocator.Container.RegisterSingleWithInterface(_playerInputActionReader);
-            ServiceLocator.Container.RegisterSingleWithInterface<IWebSocketsService>(new WebSocketsService());
+            ServiceLocator.Container.RegisterSingleWithInterface<IWebSocketsService>(new WebSocketsService(this));
             ServiceLocator.Container.RegisterSingleWithInterface<IAssetsAddressablesProvider>(new AssetsAddressablesProvider());
             ServiceLocator.Container.RegisterSingleWithInterface(this);
             ServiceLocator.Container.RegisterSingleWithInterface<IUIFactory>(

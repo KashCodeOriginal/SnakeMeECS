@@ -1,9 +1,8 @@
-﻿using ElRaccoone.WebSockets;
-using Newtonsoft.Json;
-using OOP.Data;
-using OOP.Infrastructure.ProjectStateMachine.States;
+﻿using OOP.Data;
 using UnityEngine;
 using UnityEngine.Events;
+using ElRaccoone.WebSockets;
+using OOP.Infrastructure.ProjectStateMachine.States;
 
 namespace OOP.Services.WebSocketsService
 {
@@ -16,10 +15,8 @@ namespace OOP.Services.WebSocketsService
         private readonly WSConnection _wsConnection = new(URL);
 
         private long _gameID;
-        
-        
-        
-        public WebSocketsService()
+
+        public WebSocketsService(GameBootstrap gameBootstrap)
         {
             _wsConnection.OnConnected(() =>
             {
@@ -57,6 +54,8 @@ namespace OOP.Services.WebSocketsService
                     case "game-ended":
                     {
                         var gameEnded = message.ToDeserialized<GameEndGet>();
+                        
+                        gameBootstrap.StateMachine.SwitchState<MainMenuState>();
                         
                         Debug.Log(message);
 

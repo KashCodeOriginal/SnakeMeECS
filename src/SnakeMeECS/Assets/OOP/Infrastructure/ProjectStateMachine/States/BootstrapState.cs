@@ -14,15 +14,7 @@ namespace OOP.Infrastructure.ProjectStateMachine.States
             Initializer = initializer;
         }
 
-        public async void OnEnter()
-        {
-            var asyncOperationHandle = Addressables.LoadSceneAsync(AssetsAddressableConstants.MAIN_MENU_SCENE);
-            await asyncOperationHandle.Task;
-        
-            OnLoadComplete();
-        }
-
-        private void OnLoadComplete()
+        public void OnEnter()
         {
             Initializer.StateMachine.SwitchState<MainMenuState>();
         }

@@ -133,7 +133,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: tickTime
-      value: 0.03
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4958016069329523290, guid: 0aebb86e29e2154409705433b33a790c, type: 3}
       propertyPath: selectedConfiguration

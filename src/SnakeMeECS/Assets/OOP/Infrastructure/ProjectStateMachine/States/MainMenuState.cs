@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
+using OOP.Data;
 using OOP.UI;
 using OOP.Services.Fabric.UIFactory;
 using OOP.Infrastructure.ProjectStateMachine.Base;
 using OOP.Services.WebSocketsService;
+using UnityEngine.AddressableAssets;
 
 namespace OOP.Infrastructure.ProjectStateMachine.States
 {
@@ -24,6 +26,9 @@ namespace OOP.Infrastructure.ProjectStateMachine.States
 
         public async void OnEnter()
         {
+            var asyncOperationHandle = Addressables.LoadSceneAsync(AssetsAddressableConstants.MAIN_MENU_SCENE);
+            await asyncOperationHandle.Task;
+
             await ShowUI();
         }
 
