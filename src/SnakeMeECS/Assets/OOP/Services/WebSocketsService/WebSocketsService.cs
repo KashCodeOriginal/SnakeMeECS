@@ -26,8 +26,6 @@ namespace OOP.Services.WebSocketsService
         {
             _wsConnection = new WebSocket(URL);
 
-            Tick();
-
             _wsConnection.OnOpen += () =>
             {
                 Debug.Log("WS Connected!");
@@ -123,17 +121,6 @@ namespace OOP.Services.WebSocketsService
             };
 
             await _wsConnection.SendText(gameEndPost.ToJson());
-        }
-
-        private async Task Tick()
-        {
-            while (true)
-            {
-                #if !UNITY_WEBGL || UNITY_EDITOR
-                _wsConnection.DispatchMessageQueue();
-                await Task.Yield();
-                #endif
-            }
         }
 
         public async void DestroyConnection()
