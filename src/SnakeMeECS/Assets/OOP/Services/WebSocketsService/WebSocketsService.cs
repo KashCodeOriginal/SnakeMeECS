@@ -1,7 +1,8 @@
-﻿using OOP.Data;
+﻿using System.Threading.Tasks;
+using NativeWebSocket;
+using OOP.Data;
 using UnityEngine;
 using UnityEngine.Events;
-using ElRaccoone.WebSockets;
 using OOP.Infrastructure.ProjectStateMachine.States;
 
 namespace OOP.Services.WebSocketsService
@@ -12,29 +13,41 @@ namespace OOP.Services.WebSocketsService
         
         private const string URL = "wss://dev.match.qubixinfinity.io/snake";
 
-        private readonly WSConnection _wsConnection = new(URL);
+        private WebSocket _wsConnection;
 
         private long _gameID;
 
         public WebSocketsService(GameBootstrap gameBootstrap)
         {
-            _wsConnection.OnConnected(() =>
+            InitializeWebSocket(gameBootstrap);
+        }
+
+        private async void InitializeWebSocket(GameBootstrap gameBootstrap)
+        {
+            _wsConnection = new WebSocket(URL);
+
+            Tick();
+
+            _wsConnection.OnOpen += () =>
             {
                 Debug.Log("WS Connected!");
-            });
-            
-            _wsConnection.OnDisconnected(() => 
-            {
-                Debug.Log("WS Disconnected!");
-            });
+            };
 
-            _wsConnection.OnError(error => 
+            _wsConnection.OnError += (error) =>
             {
                 Debug.Log("WS Error " + error);
-            });
-            
-            _wsConnection.OnMessage(message =>
+            };
+
+            _wsConnection.OnClose += (e) =>
             {
+                Debug.Log("WS Disconnected!");
+            };
+
+
+            _wsConnection.OnMessage += (bytes) =>
+            {
+                var message = System.Text.Encoding.UTF8.GetString(bytes);
+
                 var messageType = message.ToDeserialized<BaseTypeDeserializer>();
                 
                 Debug.Log(message);
@@ -67,22 +80,22 @@ namespace OOP.Services.WebSocketsService
                         break;
                     }
                 }
-            });
+            };
 
-            _wsConnection.Connect();
+            await _wsConnection.Connect();
         }
 
-        public void PostNewGame()
+        public async void PostNewGame()
         {
             var newGame = new GameGet
             {
                 type = "create-game"
             };
             
-            _wsConnection.SendMessage(newGame.ToJson());
+            await _wsConnection.SendText(newGame.ToJson());
         }
 
-        public void PostSnakeCollectedApple(long appleCount, long snakeLenght)
+        public async void PostSnakeCollectedApple(long appleCount, long snakeLenght)
         {
             var gamePost = new GameStatsPost()
             {
@@ -95,10 +108,10 @@ namespace OOP.Services.WebSocketsService
                 }
             };
             
-            _wsConnection.SendMessage(gamePost.ToJson());
+            await _wsConnection.SendText(gamePost.ToJson());
         }
 
-        public void PostEndGame()
+        public async void PostEndGame()
         {
             var gameEndPost = new GameEndPost()
             {
@@ -109,7 +122,23 @@ namespace OOP.Services.WebSocketsService
                 }
             };
 
-            _wsConnection.SendMessage(gameEndPost.ToJson());
+            await _wsConnection.SendText(gameEndPost.ToJson());
+        }
+
+        private async Task Tick()
+        {
+            while (true)
+            {
+                #if !UNITY_WEBGL || UNITY_EDITOR
+                _wsConnection.DispatchMessageQueue();
+                await Task.Yield();
+                #endif
+            }
+        }
+
+        public async void DestroyConnection()
+        {
+            await _wsConnection.Close();
         }
     }
 }

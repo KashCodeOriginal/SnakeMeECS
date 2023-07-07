@@ -1,3 +1,4 @@
+using System;
 using OOP.Infrastructure.ProjectStateMachine.Base;
 using OOP.Infrastructure.ProjectStateMachine.States;
 using OOP.Services.AssetsAddressables;
@@ -42,6 +43,13 @@ namespace OOP
         private T GetAsset<T>() where T : IService
         {
             return ServiceLocator.Container.Single<T>();
+        }
+
+        private void OnApplicationQuit()
+        {
+            var webSocketsService = GetAsset<IWebSocketsService>();
+            
+            webSocketsService.DestroyConnection();
         }
     }
 }

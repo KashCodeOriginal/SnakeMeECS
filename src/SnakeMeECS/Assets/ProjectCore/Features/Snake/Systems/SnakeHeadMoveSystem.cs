@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ME.ECS;
+using OOP.Services.Fabric.UIFactory;
 using OOP.Services.Locator;
 using OOP.Services.WebSocketsService;
 using ProjectCore.Features.Food.Components;
@@ -29,6 +30,7 @@ namespace ProjectCore.Features.Snake.Systems
         private int3 _moveOffset;
 
         private IWebSocketsService _webSocketsService;
+        private IUIFactory _uiFactory;
         
         public World world { get; set; }
         
@@ -40,6 +42,7 @@ namespace ProjectCore.Features.Snake.Systems
             _foodFeature = world.GetFeature<FoodFeature>();
 
             _webSocketsService = ServiceLocator.Container.Single<IWebSocketsService>();
+            _uiFactory = ServiceLocator.Container.Single<IUIFactory>();
         }
         
         void ISystemBase.OnDeconstruct() {}
@@ -180,13 +183,16 @@ namespace ProjectCore.Features.Snake.Systems
                     AddBananaToMap();
                 }
                 
-                _webSocketsService.PostSnakeCollectedApple(snakeBody.ApplesEaten, snakeBody.Length);
+                _webSocketsService.PostSnakeCollectedApple(snakeBody.ApplesEaten, snakeBody.Length + 1);
             }
             else if (currentCell.Food.Value.Get<FoodSpawn>().FoodType == FoodType.Banana)
             {
                 snakeBody.Length += 2;
                 currentCell.Food.Value.Set<DestroyImmediately>();
             }
+            
+            _uiFactory.GameplayScreenComponent.UpdateApplesText(snakeBody.ApplesEaten);
+            _uiFactory.GameplayScreenComponent.UpdateLenghtText(snakeBody.Length + 1);
             
             currentCell.Food = null;
         }

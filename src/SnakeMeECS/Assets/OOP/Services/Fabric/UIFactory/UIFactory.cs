@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using OOP.Data;
 using OOP.Services.AssetsAddressables;
+using OOP.UI;
 using UnityEngine;
 
 namespace OOP.Services.Fabric.UIFactory
@@ -19,6 +20,8 @@ namespace OOP.Services.Fabric.UIFactory
         public GameObject GameLoadingScreen { get; private set; }
 
         public GameObject GameplayScreen { get; private set; }
+
+        public GameplayScreen GameplayScreenComponent { get; private set; }
 
 
         public async Task<GameObject> CreateMenuScreen()
@@ -51,6 +54,8 @@ namespace OOP.Services.Fabric.UIFactory
         {
             var screenPrefab = await _assetsAddressablesProvider.GetAsset<GameObject>(AssetsAddressableConstants.GAMEPLAY_SCREEN);
             GameplayScreen = Object.Instantiate(screenPrefab);
+
+            GameplayScreenComponent = GameplayScreen.GetComponent<GameplayScreen>();
 
             return GameplayScreen;
         }

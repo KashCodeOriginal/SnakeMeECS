@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.endel.nativewebsocket": "https://github.com/endel/NativeWebSocket.git#upm",
     "com.me.ecs": "https://github.com/chromealex/ecs-submodule.git",
     "com.unity.ai.navigation": "1.1.1",
     "com.unity.cinemachine": "2.9.2",
@@ -14,7 +15,6 @@
     "com.unity.timeline": "1.7.2",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.7.8",
-    "nl.elraccoone.web-sockets": "https://github.com/jeffreylanters/unity-web-sockets.git",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",

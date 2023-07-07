@@ -23,7 +23,7 @@ namespace OOP.Infrastructure.ProjectStateMachine.States
         public void OnEnter()
         {
             ShowUI();
-            
+
             _webSocketsService.OnGameInitialized += StartGame;
         }
 

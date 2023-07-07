@@ -9,5 +9,6 @@ namespace OOP.Services.WebSocketsService
         public void PostNewGame();
         public void PostSnakeCollectedApple(long appleCount, long snakeLenght);
         public void PostEndGame();
+        public void DestroyConnection();
     }
 }
